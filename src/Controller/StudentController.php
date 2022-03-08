@@ -107,7 +107,7 @@ class StudentController extends AbstractController
      * @Route("/new", name="student_new", methods={"GET","POST"})
      */
     function new (Request $request): Response {
-        $this->denyAccessUnlessGranted('ROLE_USER');
+        //$this->denyAccessUnlessGranted('ROLE_USER');
 
         $student = new Student();
         $student->setNoteDate(new DateTime());

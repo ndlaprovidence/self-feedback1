@@ -100,32 +100,30 @@ class StudentRepository extends ServiceEntityRepository
         //dump($result);
         return $result;
     }
-    // /**
-    //  * @return Student[] Returns an array of Student objects
+  
+        // /**
+    //  * @return NoteWeek[] Returns an array of Student objects
     //  */
-    /*
-    public function findByExampleField($value)
+    
+    public function findWeek($startdate): ?array
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT note_date FROM student WHERE note_date BETWEEN '$startdate' AND date_add('$startdate', interval 4 day);";
+        $query = $conn->executeQuery($sql);
+        $result = $query->fetchAll();
+        return $result;
     }
-    */
+    
 
-    /*
-    public function findOneBySomeField($value): ?Student
+    public function findNotesFromWeek(): ?array
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $conn = $this->getEntityManager()->getConnection();
+        $madate3 = new DateTime(date("Y-m-d"));
+        $madate3->sub(new DateInterval('P4D'));
+        $madate = new DateTime(date("Y-m-d"));
+        $sql = 'SELECT note_repas as "Repas", note_valeur_environnement as "Environnement", note_date as "Date", note_Commentaire as "Commentaire", id FROM student WHERE note_date <= "'.$madate->format('Y-m-d').'" AND note_date >= "'.$madate3->format("Y-m-d").'";';
+        $query = $conn->executeQuery($sql);
+        $result = $query->fetchAll();
+        return $result;
     }
-    */
 }

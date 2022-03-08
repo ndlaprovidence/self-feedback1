@@ -42,7 +42,7 @@ class QRcodeController extends AbstractController
             $writer = new PngWriter();
             
             // Create QR code
-            include('../adresse.php');
+           include('../adresse.php');
             $qrCode = QrCode::create(ADRESSE.'student/new?token='.$token)
                 ->setEncoding(new Encoding('UTF-8'))
                 ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
