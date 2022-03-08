@@ -64,15 +64,25 @@ class ExportController extends AbstractController
         function coordTranslator(float $note) {//Traduit les notes en coordonnée Y pour le graphique.
             return 155-(100*($note-1)*25/100);
         }
-        function getData(\TCPDF $pdf, $request, bool $refuse) { //ça a commencé en getdata, et ça finit en postdata lmao
-            $pdf->SetFont('helvetica', 'B', 11);
+        function getData(\TCPDF $pdf, $request, bool $refuse = false) { //ça a commencé en getdata, et ça finit en postdata lmao
+            $bidule = 0;
+            
             //J'ai besoin d'un moyen de revenir sue cette ligne en despi, alors je vais dire bun.
-            $pdf->Text(100,50, "a",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
             if($refuse==false){ //Refuse est ici pour des raisons de test, il sera retiré une fois que le debugging sera fini.
-                foreach($request['Date'] as $ligne) {
-                    $bidule+=1;
-                    $pdf->Text(100,50+$bidule, $ligne,false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                $pdf->SetFont('helvetica', 'B', 11);
+                $pdf->Text(50,50, "Note Repas",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                $pdf->Text(100,50, "Note Env.",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                $pdf->Text(150,50, "Commentaire",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                $pdf->Text(25,50, "ID",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                $pdf->SetFont('helvetica', '', 11);
+                foreach($request as $ligne) {
+                    $bidule+=5;
+                    $pdf->Text(50,50+$bidule, $ligne['Repas'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                    $pdf->Text(100,50+$bidule, $ligne['Environnement'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                    $pdf->Text(150,50+$bidule, $ligne['Commentaire'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                    $pdf->Text(25,50+$bidule, $ligne['note_id'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
                 }
+                
             }
         }
 
@@ -116,7 +126,7 @@ class ExportController extends AbstractController
         //2criture du titre, je sais pas quoi mettre, les autres verront.
         $pdf->Write(0, 'Indice de satisfaction globale');
         // Création du squelette du graphique
-        getData($pdf, $product, true);
+        getData($pdf, $product, false);
         /// setGraphTemplate($pdf);
         // Ajout du contenu du graphique, voyez la fonction pour gérer ça.
         /// insertIntoGraph($pdf);
@@ -124,8 +134,8 @@ class ExportController extends AbstractController
 // ---------------------------------------------------------
         ob_end_clean(); //Nécessaire pour que le pdf se fasse bien.
         //Close and output PDF document
-        //$pdf->Output('export.pdf', 'I');
-        dump($product);
+        $pdf->Output('export.pdf', 'I');
+        //dump($product);
         return $this->render('export/index.html.twig', [
             'controller_name' => 'ExportController',
         ]);
