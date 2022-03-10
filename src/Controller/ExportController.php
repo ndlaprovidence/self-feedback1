@@ -102,7 +102,7 @@ class ExportController extends AbstractController
         $madate3->sub(new DateInterval('P4D'));
         $madate = new DateTime(date("Y-m-d"));
         // Mise en place du header (Logo, Taille logo, Titre, Sous-titre, Couleur de texte, couleur de ligne)
-        $pdf->SetHeaderData('', 0, "Rapports du ".$madate->format("d/m/Y")." au ".$madate3->format("d/m/Y")."", "Feedback Self");
+        $pdf->SetHeaderData('', 0, "Rapports du ".$madate3->format("d/m/Y")." au ".$madate->format("d/m/Y")."", "Feedback Self");
 
         // Mise en place des polices
         $pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
@@ -142,8 +142,6 @@ class ExportController extends AbstractController
         //Close and output PDF document
         $pdf->Output('export.pdf', 'I');
         //dump($product);
-        return $this->render('export/index.html.twig', [
-            'controller_name' => 'ExportController',
-        ]);
+        return $this->redirectToRoute('student_index', [], Response::HTTP_SEE_OTHER);
     }
 }

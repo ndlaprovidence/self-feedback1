@@ -23,7 +23,7 @@ class StudentController extends AbstractController
      */
     public function index(StudentRepository $StudentRepository, ChartBuilderInterface $chartBuilder): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
         $student = $StudentRepository->findAll();
         
