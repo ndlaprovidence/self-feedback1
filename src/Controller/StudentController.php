@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\QrcodeRepository;
 
 /**
  * @Route("/student")
@@ -106,8 +107,12 @@ class StudentController extends AbstractController
     /**
      * @Route("/new", name="student_new", methods={"GET","POST"})
      */
-    function new (Request $request): Response {
-        $this->denyAccessUnlessGranted('ROLE_USER');
+    function new (Request $request, QrcodeRepository $qrcodeRepository): Response {
+        $token = $qrcodeRepository->getTokenToday();
+        $token2 = $_GET['token'];
+        if ($token == $token2)
+        {
+            $this->denyAccessUnlessGranted('ROLE_USER');
 
         $student = new Student();
         $student->setNoteDate(new DateTime());
@@ -136,6 +141,12 @@ class StudentController extends AbstractController
             'student' => $student,
             'form' => $form->createView(),
         ]);
+        }
+        else
+        {
+            return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
+        }
+        
     }
         /**
      * @Route("/valid", name="student_valid", methods={"GET"})

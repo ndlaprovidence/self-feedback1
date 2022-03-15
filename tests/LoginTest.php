@@ -6,11 +6,16 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class LoginTest extends WebTestCase
 {
+<<<<<<< HEAD
     public function testValidData(): void
+=======
+    public function testSomething(): void
+>>>>>>> origin/NFD_TokenQrCode
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/login');
 
+<<<<<<< HEAD
         $formData = [
             'inputUsername' => 'admin@jmail.com',
             'password' => '123456789Az.',
@@ -38,4 +43,9 @@ class LoginTest extends WebTestCase
         // $this->assertSelectorTextContains('h1', 'Hello World');
     }
     
+=======
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'Username');
+    }
+>>>>>>> origin/NFD_TokenQrCode
 }
