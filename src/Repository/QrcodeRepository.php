@@ -27,7 +27,6 @@ class QrcodeRepository extends ServiceEntityRepository
         $sql = 'SELECT token FROM qrcode WHERE qrcode.date = DATE(NOW());';
         $query = $conn->executeQuery($sql);
         $result = $query->fetchOne();
-        dump($result);
         return $result;
     }
     public function createToken()
@@ -36,10 +35,20 @@ class QrcodeRepository extends ServiceEntityRepository
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = 'INSERT INTO qrcode VALUES (0,DATE(NOW()),'.$token.')';
-        dump($sql);
         $query = $conn->executeQuery($sql);
 //$result = $query->fetchOne();
         return $token;
+    }
+
+    public function verifyToken()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT token FROM qrcode WHERE qrcode.date = DATE(NOW());';
+        $query = $conn->executeQuery($sql);
+        $result = $query->fetchOne();
+        dump($result);
+        return $result;
     }
     
 

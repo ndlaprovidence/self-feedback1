@@ -26,7 +26,7 @@ class QRcodeController extends AbstractController
     public function index(QrcodeRepository $qrcodeRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
-        
+        $qrcodeRepository->verifyToken();
         $logoPath = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'ndlp.png';
         $token = $qrcodeRepository->getTokenToday();
         if ($token == "")
