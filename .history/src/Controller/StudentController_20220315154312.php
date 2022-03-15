@@ -135,12 +135,17 @@ class StudentController extends AbstractController
     /**
      * @Route("/new", name="student_new", methods={"GET","POST"})
      */
+<<<<<<< HEAD
     function new (Request $request, QrcodeRepository $qrcodeRepository): Response {
         $token = $qrcodeRepository->getTokenToday();
         $token2 = $_GET['token'];
         if ($token == $token2)
         {
             $this->denyAccessUnlessGranted('ROLE_USER');
+=======
+    function new (Request $request): Response {
+        //$this->denyAccessUnlessGranted('ROLE_USER');
+>>>>>>> origin/LAB_NewNote
 
         $student = new Student();
         $student->setNoteDate(new DateTime());

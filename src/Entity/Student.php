@@ -43,6 +43,16 @@ class Student
      */
     private $classe;
 
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $noteChaleur;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $noteGout;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +115,30 @@ class Student
     public function setClasse(?classes $classe): self
     {
         $this->classe = $classe;
+
+        return $this;
+    }
+
+    public function getNoteChaleur(): ?int
+    {
+        return $this->noteChaleur;
+    }
+
+    public function setNoteChaleur(int $noteChaleur): self
+    {
+        $this->noteChaleur = $noteChaleur;
+
+        return $this;
+    }
+
+    public function getNoteGout(): ?int
+    {
+        return $this->noteGout;
+    }
+
+    public function setNoteGout(int $noteGout): self
+    {
+        $this->noteGout = $noteGout;
 
         return $this;
     }

@@ -1,3 +1,4 @@
+    <link rel="stylesheet" href="../css/rating.css">
 {{ form_start(form) }}
 	<div class="form_container">
 		<h1 class="login_title">
@@ -10,15 +11,45 @@
 			Note repas :
 		</h3>
 		<div class="login_star">
-			<label>
+		
 				{{ form_widget(form.note_repas) }}
-			</label>
+				<label class = "full" for="student_note_repas_0" title="Awesome - 1 stars"></label>
+				<label class = "full" for="student_note_repas_1" title="Awesome - 2 stars"></label>
+				<label class = "full" for="student_note_repas_2" title="Awesome - 3 stars"></label>
+				<label class = "full" for="student_note_repas_3" title="Awesome - 4 stars"></label>
+				<label class = "full" for="student_note_repas_4" title="Awesome - 5 stars"></label>
+			
+		</div>
+		<h3 class="login_title">
+			Note chaleur :
+		</h3>
+		<div class="login_star">
+		
+				{{ form_widget(form.note_chaleur) }}
+				<label class = "full" for="student_note_repas_0" title="Awesome - 1 stars"></label>
+				<label class = "full" for="student_note_repas_1" title="Awesome - 2 stars"></label>
+				<label class = "full" for="student_note_repas_2" title="Awesome - 3 stars"></label>
+				<label class = "full" for="student_note_repas_3" title="Awesome - 4 stars"></label>
+				<label class = "full" for="student_note_repas_4" title="Awesome - 5 stars"></label>
+		</div>
+		<h3 class="login_title">
+			Note goût :
+		</h3>
+		<div class="login_star">
+		
+				{{ form_widget(form.note_gout) }}
+				<label class = "full" for="student_note_repas_0" title="Awesome - 1 stars"></label>
+				<label class = "full" for="student_note_repas_1" title="Awesome - 2 stars"></label>
+				<label class = "full" for="student_note_repas_2" title="Awesome - 3 stars"></label>
+				<label class = "full" for="student_note_repas_3" title="Awesome - 4 stars"></label>
+				<label class = "full" for="student_note_repas_4" title="Awesome - 5 stars"></label>
 		</div>
 		{# <label for="rating_env">Note Environnement :</label> <br><br> #}
 		<h3 class="login_title">
 			Note Environnement :
 		</h3>
 		<div class="login_star">
+
 			<label>
 				{{ form_widget(form.note_valeur_environnement) }}
 			</label>
@@ -34,7 +65,7 @@
 		{{ form_widget(form.envoyer) }}
 	</div>
 {% block javascripts %}
-	<script src="../js/star-rating.js"></script>
+	<!--<script src="../js/star-rating.js"></script>-->
 {% endblock %}
 
 {# {{ form_widget(form) }} #}
