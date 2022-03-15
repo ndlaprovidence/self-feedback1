@@ -1,19 +1,52 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-user.html.twig' %}
+
+
+{% block stylesheets %}
+   <link rel="stylesheet" href="..css/style.css">
+   <link rel="stylesheet" href="..css/dashboard.css">
+   <link rel="stylesheet" href="..css/table.css">
+   <style>
+   
+    table {
+        border: solid #424242 0px !important;
+        width: 100%;
+    }
+    
+    tr {
+        background-color: #2dabe10c;
+    }
+    
+    tr:hover {
+        background-color: #2dabe136;
+    }
+    
+    tr:active {
+        background-color: #2dabe150;
+    }
+
+    .table_title {
+        background-color: #b8e6fa;
+        position: sticky;
+        top: 63px;
+    }
+    
+   </style>
+{% endblock %}
 
 {% block title %}User{% endblock %}
 
 {% block body %}
     <h1>User</h1>
 
-    <table class="table">
+    <table style="border: solid #424242 0px !important; width: 100%;">
         <tbody>
-            <tr>
-                <th>Id</th>
+            <tr class="table_title" id="table_title">
+                <th class="table_id">Id</th>
                 <td>{{ user.id }}</td>
             </tr>
             <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
+                <th>username</th>
+                <td>{{ user.username }}</td>
             </tr>
             <tr>
                 <th>Roles</th>
@@ -32,3 +65,4 @@
 
     {{ include('user/_delete_form.html.twig') }}
 {% endblock %}
+

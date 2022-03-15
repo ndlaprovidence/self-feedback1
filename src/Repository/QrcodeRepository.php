@@ -27,7 +27,7 @@ class QrcodeRepository extends ServiceEntityRepository
         $sql = 'SELECT token FROM qrcode WHERE qrcode.date = DATE(NOW());';
         $query = $conn->executeQuery($sql);
         $result = $query->fetchOne();
-        //dump($result);
+        dump($result);
         return $result;
     }
     public function createToken()

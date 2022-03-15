@@ -6,7 +6,7 @@ use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use App\Security\LoginFormAuthenticator;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Bridge\Twig\Mime\Templatedusername;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +14,7 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
-use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use SymfonyCasts\Bundle\Verifyusername\Exception\VerifyusernameExceptionInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -22,7 +22,7 @@ class RegistrationController extends AbstractController
 
     public function __construct(EmailVerifier $emailVerifier)
     {
-        $this->emailVerifier = $emailVerifier;
+        $this->EmailVerifier = $emailVerifier;
     }
 
     /**
@@ -47,15 +47,15 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
+            // generate a signed url and username it to the user
+            $this->EmailVerifier->sendusernameConfirmation('app_verify_username', $user,
+                (new Templatedusername())
                     ->from(new Address('feedbacktest@yopmail.com', 'Feedback Self Test'))
-                    ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
+                    ->to($user->getusername())
+                    ->subject('Please Confirm your username')
+                    ->htmlTemplate('registration/confirmation_username.html.twig')
             );
-            // do anything else you need here, like send an email
+            // do anything else you need here, like send an username
 
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
@@ -71,23 +71,23 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * @Route("/verify/email", name="app_verify_email")
+     * @Route("/verify/username", name="app_verify_username")
      */
-    public function verifyUserEmail(Request $request): Response
+    public function verifyUserusername(Request $request): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        // validate email confirmation link, sets User::isVerified=true and persists
+        // validate username confirmation link, sets User::isVerified=true and persists
         try {
-            $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
-        } catch (VerifyEmailExceptionInterface $exception) {
-            $this->addFlash('verify_email_error', $exception->getReason());
+            $this->EmailVerifier->handleusernameConfirmation($request, $this->getUser());
+        } catch (VerifyusernameExceptionInterface $exception) {
+            $this->addFlash('verify_username_error', $exception->getReason());
 
             return $this->redirectToRoute('app_register');
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
+        $this->addFlash('success', 'Your username address has been verified.');
 
         return $this->redirectToRoute('app_register');
     }

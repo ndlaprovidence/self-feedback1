@@ -1,15 +1,48 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-dashboard.html.twig' %}
 
 {% block title %}User index{% endblock %}
 
-{% block body %}
-    <h1>User index</h1>
+ {% block stylesheets %}
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+ {% endblock %}
 
-    <table class="table">
-        <thead>
-            <tr>
+{% block body %}
+
+        <nav class="leftNav" id="myTopnav">
+            <span class="leftnav__separateBar"></span>
+            <div class="leftnav__param">
+                <a class="topnav__link" href="{{ path('student_index') }}">| Rapports <img src="../images/report.png" width="30px"></a>
+                <a class="topnav__link" href="{{ path('classes_index') }}">| Gestion des classes <img src="../images/classe.png" width="30px"></a>
+                <a class="topnav__link" href="#">| Gestion des utilisateurs <img src="../images/user.png" width="30px"></a>
+                <a class="topnav__link" href="{{ path('qrcode_generate') }}">| générer le QR-code <img src="../images/qrcode.png" width="30px"></a>
+            </div>
+        </nav>
+<div class="bloc_dashboard">
+    {# <h1>User index</h1> #}
+
+
+        <nav class="leftNav" id="myTopnav">
+            <span class="leftnav__separateBar"></span>
+            <div class="leftnav__param">
+                <a class="topnav__link" href="{{ path('student_index') }}">| Rapports <img src="../images/report.png" width="20px"></a>
+                <a class="topnav__link" href="{{ path('classes_index') }}" >| Gestion des classes <img src="../images/classe.png" width="20px"></a>
+                <a class="topnav__link" href="#">| Gestion des utilisateurs <img src="../images/user.png" width="20px"></a>
+                <a class="topnav__link" href="{{ path('qrcode_generate') }}">| générer le QR-code <img src="../images/qrcode.png" width="20px"></a>
+            </div>
+        </nav>
+
+    <div class="bloc_dashboard">
+        <div class="btn_container">
+            <h1>User index</h1>
+            <a href="{{ path('user_new') }}"><button id="btn5">Créer un utilisateur</button></a>
+        </div>
+    
+ <table class="table">
+            <thead>
+                <tr class="table_title" id="table_title">
                 <th>Id</th>
-                <th>Email</th>
+                <th>username</th>
                 <th>Roles</th>        
                 <th>actions</th>
             </tr>
@@ -17,21 +50,28 @@
         <tbody>
         {% for user in users %}
             <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>
+                <th>{{ user.id }}</th>
+                <th>{{ user.username }}</th>
+                <th>{{ user.roles ? user.roles|json_encode : '' }}</th>
+                <th>
                     <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
                     <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
-                </td>
+                </th>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <th colspan="5">no records found</th>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('user_new') }}">Create new</a>
+    {# <a href="{{ path('user_new') }}">Create new</a> #}
+</div>
+    <div class="bottom__param">
+       <a class="bottom__link" href="#"><img src="../images/report.png" width="20px"></a>
+       <a class="bottom__link" href="{{ path('classes_index') }}" ><img src="../images/classe.png" width="20px"></a>
+       <a class="bottom__link" href="{{ path('user_index') }}"><img src="../images/user.png" width="20px"></a>
+       <a class="bottom__link" href="{{ path('qrcode_generate') }}"><img src="../images/qrcode.png" width="20px"></a>
+    </div>
 {% endblock %}

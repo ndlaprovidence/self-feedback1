@@ -1,0 +1,6 @@
+table{
+    display: grid;
+}
+th {
+    padding: 15px;
+}

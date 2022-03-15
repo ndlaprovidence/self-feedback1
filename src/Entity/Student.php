@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\StudentRepository;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\StudentRepository;
 
 /**
  * @ORM\Entity(repositoryClass=StudentRepository::class)
@@ -90,6 +91,7 @@ class Student
 
     public function setNoteDate(\DateTimeInterface $note_date): self
     {
+        //$note_date=date("d/m/Y");
         $this->note_date = $note_date;
 
         return $this;

@@ -1,4 +1,43 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+	<div class="form_container">
+		<h1 class="login_title">
+			Donnez votre avis !
+		</h1>
+		{# <label for="rating_repas">Note repas :</label><br><br> #}
+
+		{# <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"> #}
+		<h3 class="login_title">
+			Note repas :
+		</h3>
+		<div class="login_star">
+			<label>
+				{{ form_widget(form.note_repas) }}
+			</label>
+		</div>
+		{# <label for="rating_env">Note Environnement :</label> <br><br> #}
+		<h3 class="login_title">
+			Note Environnement :
+		</h3>
+		<div class="login_star">
+			<label>
+				{{ form_widget(form.note_valeur_environnement) }}
+			</label>
+		</div>
+		<h3 class="login_title">
+			Commentaire <span style="font-size:80%;">( facultatif )</span> :
+		</h3>
+		{# <label for="note_commentaire">Commentaire :</label> #}
+		{{ form_widget(form.note_commentaire) }}
+		<label for="classe">Votre classe <span style="font-size:80%;">( facultatif )</span> :</label>
+		{{ form_widget(form.classe) }}
+
+		{{ form_widget(form.envoyer) }}
+	</div>
+{% block javascripts %}
+	<script src="../js/star-rating.js"></script>
+{% endblock %}
+
+{# {{ form_widget(form) }} #}
+{# <button class="btn">{{ button_label|default('Save') }}</button> #}
+
 {{ form_end(form) }}

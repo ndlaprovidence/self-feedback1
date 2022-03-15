@@ -1,11 +1,16 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-form.html.twig' %}
 
-{% block title %}New Classes{% endblock %}
+{% block title %}New Classe{% endblock %}
+
+{% block stylesheets %}
+   <link rel="stylesheet" href="../css/style.css">
+   <link rel="stylesheet" href="../css/dashboard.css">
+   <link rel="stylesheet" href="../css/login.css">
+
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Classes</h1>
+    <h1>Créer une nouvelle Classe</h1>
 
     {{ include('classes/_form.html.twig') }}
-
-    <a href="{{ path('classes_index') }}">back to list</a>
 {% endblock %}

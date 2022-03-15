@@ -1,4 +1,7 @@
 {{ form_start(form) }}
+<div class="form_container login_form">
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <button class="login_inputs" id="btn5">{{ button_label|default('Save') }}</button>
+    <a href="{{ path('user_index') }}"  class="back_tolist">back to list</a>
+    </div>
 {{ form_end(form) }}

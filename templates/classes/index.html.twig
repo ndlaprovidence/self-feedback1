@@ -1,35 +1,62 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-dashboard.html.twig' %}
 
 {% block title %}Classes index{% endblock %}
 
+ {% block stylesheets %}
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+ {% endblock %}
+
 {% block body %}
-    <h1>Classes index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Classe_libelle</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for class in classes %}
-            <tr>
-                <td>{{ class.id }}</td>
-                <td>{{ class.classeLibelle }}</td>
-                <td>
-                    <a href="{{ path('classes_show', {'id': class.id}) }}">show</a>
-                    <a href="{{ path('classes_edit', {'id': class.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('classes_new') }}">Create new</a>
+        <nav class="leftNav" id="myTopnav">
+            <span class="leftnav__separateBar"></span>
+            <div class="leftnav__param">
+                <a class="topnav__link" href="{{ path('student_index') }}">| Rapports <img src="../images/report.png" width="20px"></a>
+                <a class="topnav__link" href="#">| Gestion des classes <img src="../images/classe.png" width="20px"></a>
+                <a class="topnav__link" href="{{ path('user_index') }}">| Gestion des utilisateurs <img src="../images/user.png" width="20px"></a>
+                <a class="topnav__link" href="{{ path('qrcode_generate') }}">| générer le QR-code <img src="../images/qrcode.png" width="20px"></a>
+            </div>
+        </nav>
+
+    <div class="bloc_dashboard">
+        <div class="btn_container">
+            <h1>FeedBack - Liste des classes</h1> 
+            <a href="{{ path('classes_new') }}"><button id="btn5">Ajouter une classe</button></a>
+        </div>
+        <table class="table">
+            <thead>
+                <tr  class="table_title" id="table_title">
+                    <th>Id</th>
+                    <th>Classe_libelle</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for class in classes %}
+                <tr>
+                    <th class="table_id">{{ class.id }}</th>
+                    <th>{{ class.classeLibelle }}</th>
+                    <th>
+                        <a href="{{ path('classes_show', {'id': class.id}) }}">show</a>
+                        <a href="{{ path('classes_edit', {'id': class.id}) }}">edit</a>
+                    </th>
+                </tr>
+            {% else %}
+                <tr>
+                    <th colspan="3">no records found</th>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="bottom__param">
+       <a class="bottom__link" href="{{ path('student_index') }}"><img src="../images/report.png" width="30px"></a>
+       <a class="bottom__link" href="#" ><img src="../images/classe.png" width="30px"></a>
+       <a class="bottom__link" href="{{ path('user_index') }}"><img src="../images/user.png" width="30px"></a>
+       <a class="bottom__link" href="{{ path('qrcode_generate') }}"><img src="../images/qrcode.png" width="30px"></a>
+    </div>
+
 {% endblock %}

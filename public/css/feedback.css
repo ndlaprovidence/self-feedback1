@@ -1,0 +1,114 @@
+body {
+    overflow-y: scroll;
+}
+.topnav {
+    display: flex;
+    justify-content: center;
+}
+
+h1 {
+    max-width: 100%;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form {
+    width: 100%;
+}
+
+.form_container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 100%;
+}
+
+textarea {
+    display: block;
+    padding: 15px 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    color: rgb(44, 44, 44);
+    background: var(--bg-color);
+    box-shadow: inset 2px 4px 16px -3px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+}
+
+label {
+    padding: 10px;
+}
+#student_note_repas {
+    display: flex;
+    align-items: center;
+}
+
+#note_valeur_environnement, #student_note_valeur_environnement {
+    display: flex;
+    align-items: center;
+}
+
+.form-check-input{
+    opacity: 0;
+}
+
+.form-check {
+    padding: 5px;
+    margin: 5px;
+    border: #2c2c2c solid 2px;
+    border-radius: 100px;
+}
+
+.form-check-label {
+    font-size: 30px;
+}
+
+.form-check-label:active {
+    color: #2DAAE1;
+}
+
+ .rating__star-off {
+    position: relative;
+    fill: #2c2c2c;
+    transition: 0.1s;
+ }
+ .rating__star-off:hover {
+    opacity: 1;
+    cursor: pointer;
+    background-color: #2DAAE1;
+    fill:#2DAAE1;
+    transition: 0.1s;
+ }
+
+
+/* .bottom_button {
+    overflow: hidden;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 12px 3px rgb(175, 175, 175);
+    user-select: none;
+    z-index: 200;
+    bottom: 0;
+    width: 100%;
+} */
+
+.btn {
+    border: none;
+    width: 80%;
+    max-width: 200px;
+    height: 100%;
+    padding: 10px 10px;
+    color: black;
+    font-size: large;
+    background-color: #2DAAE1;
+    display: block;
+    margin: 10%;
+    margin-top: 20px;
+    left: 0;
+    bottom: 0;
+    max-height: 60px;
+    cursor: pointer;
+    border-radius: 15px;
+    }

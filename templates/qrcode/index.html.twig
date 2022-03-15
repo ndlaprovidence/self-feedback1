@@ -1,6 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-dashboard.html.twig' %}
 
-{% block title %}Hello QRcodeController!{% endblock %}
+{% block title %} {{ title }} {% endblock %}
+
+{% block stylesheets %}
+   <link rel="stylesheet" href="../css/style.css">
+{% endblock %}
 
 {% block body %}
 <style>
