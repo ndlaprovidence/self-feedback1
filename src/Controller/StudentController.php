@@ -32,6 +32,10 @@ class StudentController extends AbstractController
         $data2 = [];
         $data3 = [];
         $data4 = [];
+        $data5 = [];
+        $data6 = [];
+        $data7 = [];
+        $data8 = [];
         $datenoterepas1 = $StudentRepository->getDateRepas1();
         $datenoterepas2 = $StudentRepository->getDateRepas2();
         $datenoterepas3 = $StudentRepository->getDateRepas3();
@@ -46,6 +50,10 @@ class StudentController extends AbstractController
            $data2[] = $datenoterepas5[0]['AVG(note_valeur_environnement)'];
            $data3[] = $datenoterepas5[0]["AVG(note_chaleur)"];
            $data4[] = $datenoterepas5[0]["AVG(note_gout)"];
+           $data5[] = $datenoterepas5[0]["AVG(notequantite)"];
+           $data6[] = $datenoterepas5[0]["AVG(noteacceuil)"];
+           $data7[] = $datenoterepas5[0]["AVG(notediversite)"];
+           $data8[] = $datenoterepas5[0]["AVG(notehygiene)"];
        }
         if(isset($datenoterepas4[0]['note_date'])){
         $labels[] = $datenoterepas4[0]['note_date'];
@@ -53,6 +61,10 @@ class StudentController extends AbstractController
         $data2[] = $datenoterepas4[0]['AVG(note_valeur_environnement)'];
         $data3[] = $datenoterepas4[0]["AVG(note_chaleur)"];
         $data4[] = $datenoterepas4[0]["AVG(note_gout)"];
+        $data5[] = $datenoterepas4[0]["AVG(notequantite)"];
+        $data6[] = $datenoterepas4[0]["AVG(noteacceuil)"];
+        $data7[] = $datenoterepas4[0]["AVG(notediversite)"];
+        $data8[] = $datenoterepas4[0]["AVG(notehygiene)"];
     }
     if(isset($datenoterepas3[0]['note_date'])){
         $labels[] = $datenoterepas3[0]['note_date'];
@@ -60,6 +72,10 @@ class StudentController extends AbstractController
         $data2[] = $datenoterepas3[0]['AVG(note_valeur_environnement)'];
         $data3[] = $datenoterepas3[0]["AVG(note_chaleur)"];
         $data4[] = $datenoterepas3[0]["AVG(note_gout)"];
+        $data5[] = $datenoterepas3[0]["AVG(notequantite)"];
+        $data6[] = $datenoterepas3[0]["AVG(noteacceuil)"];
+        $data7[] = $datenoterepas3[0]["AVG(notediversite)"];
+        $data8[] = $datenoterepas3[0]["AVG(notehygiene)"];
     }
     if (isset($datenoterepas2[0]['note_date'])){
         $labels[] = $datenoterepas2[0]['note_date'];
@@ -67,6 +83,10 @@ class StudentController extends AbstractController
         $data2[] = $datenoterepas2[0]['AVG(note_valeur_environnement)'];
         $data3[] = $datenoterepas2[0]["AVG(note_chaleur)"];
         $data4[] = $datenoterepas2[0]["AVG(note_gout)"];
+        $data5[] = $datenoterepas2[0]["AVG(notequantite)"];
+        $data6[] = $datenoterepas2[0]["AVG(noteacceuil)"];
+        $data7[] = $datenoterepas2[0]["AVG(notediversite)"];
+        $data8[] = $datenoterepas2[0]["AVG(notehygiene)"];
     }
         if (isset($datenoterepas1[0]['note_date'])){
             $labels[] = $datenoterepas1[0]['note_date'];
@@ -74,6 +94,10 @@ class StudentController extends AbstractController
            $data2[] = $datenoterepas1[0]['AVG(note_valeur_environnement)'];
            $data3[] = $datenoterepas1[0]["AVG(note_chaleur)"];
            $data4[] = $datenoterepas1[0]["AVG(note_gout)"];
+           $data5[] = $datenoterepas1[0]["AVG(notequantite)"];
+           $data6[] = $datenoterepas1[0]["AVG(noteacceuil)"];
+           $data7[] = $datenoterepas1[0]["AVG(notediversite)"];
+           $data8[] = $datenoterepas1[0]["AVG(notehygiene)"];
        }
 
         $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
@@ -111,6 +135,38 @@ class StudentController extends AbstractController
                     'pointBackgroundColor' => 'rgb(242, 129, 35)',
                     'pointBorderColor' => 'rgb(242, 129, 35)',
                     'data' => $data2,
+                ],
+                [
+                    'label' => 'Note Quantité',
+                    'backgroundColor' => 'rgba(255,255,45, 0.5)',
+                    'borderColor' => 'rgb(255,175,45)',
+                    'pointBackgroundColor' => 'rgb(50,175,255)',
+                    'pointBorderColor' => 'rgb(50,175,255)',
+                    'data' => $data5,
+                ],
+                [
+                    'label' => 'Note Acceuil',
+                    'backgroundColor' => 'rgba(255,20,20, 0.5)',
+                    'borderColor' => 'rgb(255,175,45)',
+                    'pointBackgroundColor' => 'rgb(50,175,255)',
+                    'pointBorderColor' => 'rgb(50,175,255)',
+                    'data' => $data6,
+                ],
+                [
+                    'label' => 'Note diversité',
+                    'backgroundColor' => 'rgba(20,20,255, 0.5)',
+                    'borderColor' => 'rgb(255,175,45)',
+                    'pointBackgroundColor' => 'rgb(50,175,255)',
+                    'pointBorderColor' => 'rgb(50,175,255)',
+                    'data' => $data7,
+                ],
+                [
+                    'label' => 'Note hygiène',
+                    'backgroundColor' => 'rgba(20,255,20, 0.5)',
+                    'borderColor' => 'rgb(255,175,45)',
+                    'pointBackgroundColor' => 'rgb(50,175,255)',
+                    'pointBorderColor' => 'rgb(50,175,255)',
+                    'data' => $data8,
                 ],
             ],
         ]);
