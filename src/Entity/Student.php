@@ -53,6 +53,26 @@ class Student
      */
     private $noteGout;
 
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $notequantite;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $noteacceuil;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $notediversite;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $notehygiene;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -139,6 +159,54 @@ class Student
     public function setNoteGout(int $noteGout): self
     {
         $this->noteGout = $noteGout;
+
+        return $this;
+    }
+
+    public function getNoteQuantite(): ?int
+    {
+        return $this->notequantite;
+    }
+
+    public function setNoteQuantite(int $quantite): self
+    {
+        $this->notequantite = $quantite;
+
+        return $this;
+    }
+
+    public function getNoteAcceuil(): ?int
+    {
+        return $this->noteacceuil;
+    }
+
+    public function setNoteAcceuil(int $acceuil): self
+    {
+        $this->noteacceuil = $acceuil;
+
+        return $this;
+    }
+
+    public function getNoteDiversite(): ?int
+    {
+        return $this->notediversite;
+    }
+
+    public function setNoteDiversite(int $diversite): self
+    {
+        $this->notediversite = $diversite;
+
+        return $this;
+    }
+
+    public function getNoteHygiene(): ?int
+    {
+        return $this->notehygiene;
+    }
+
+    public function setNoteHygiene(int $hygiene): self
+    {
+        $this->notehygiene = $hygiene;
 
         return $this;
     }
