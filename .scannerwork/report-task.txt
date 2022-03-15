@@ -1,0 +1,6 @@
+projectKey=feedback---self
+serverUrl=http://localhost:9000
+serverVersion=9.3.0.51899
+dashboardUrl=http://localhost:9000/dashboard?id=feedback---self
+ceTaskId=AX90itpU9IUrMVn857II
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AX90itpU9IUrMVn857II
