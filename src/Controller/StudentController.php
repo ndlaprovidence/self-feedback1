@@ -30,6 +30,8 @@ class StudentController extends AbstractController
         $labels = [];
         $data = [];
         $data2 = [];
+        $data3 = [];
+        $data4 = [];
         $datenoterepas1 = $StudentRepository->getDateRepas1();
         $datenoterepas2 = $StudentRepository->getDateRepas2();
         $datenoterepas3 = $StudentRepository->getDateRepas3();
@@ -42,26 +44,36 @@ class StudentController extends AbstractController
            $labels[] = $datenoterepas5[0]['note_date'];
            $data[] = $datenoterepas5[0]['AVG(note_repas)'];
            $data2[] = $datenoterepas5[0]['AVG(note_valeur_environnement)'];
+           $data3[] = $datenoterepas5[0]["AVG(note_chaleur)"];
+           $data4[] = $datenoterepas5[0]["AVG(note_gout)"];
        }
         if(isset($datenoterepas4[0]['note_date'])){
         $labels[] = $datenoterepas4[0]['note_date'];
         $data[] = $datenoterepas4[0]['AVG(note_repas)'];
         $data2[] = $datenoterepas4[0]['AVG(note_valeur_environnement)'];
+        $data3[] = $datenoterepas4[0]["AVG(note_chaleur)"];
+        $data4[] = $datenoterepas4[0]["AVG(note_gout)"];
     }
     if(isset($datenoterepas3[0]['note_date'])){
         $labels[] = $datenoterepas3[0]['note_date'];
         $data[] = $datenoterepas3[0]['AVG(note_repas)'];
         $data2[] = $datenoterepas3[0]['AVG(note_valeur_environnement)'];
+        $data3[] = $datenoterepas3[0]["AVG(note_chaleur)"];
+        $data4[] = $datenoterepas3[0]["AVG(note_gout)"];
     }
     if (isset($datenoterepas2[0]['note_date'])){
         $labels[] = $datenoterepas2[0]['note_date'];
         $data[] = $datenoterepas2[0]['AVG(note_repas)'];
         $data2[] = $datenoterepas2[0]['AVG(note_valeur_environnement)'];
+        $data3[] = $datenoterepas2[0]["AVG(note_chaleur)"];
+        $data4[] = $datenoterepas2[0]["AVG(note_gout)"];
     }
         if (isset($datenoterepas1[0]['note_date'])){
             $labels[] = $datenoterepas1[0]['note_date'];
            $data[] = $datenoterepas1[0]['AVG(note_repas)'];
            $data2[] = $datenoterepas1[0]['AVG(note_valeur_environnement)'];
+           $data3[] = $datenoterepas1[0]["AVG(note_chaleur)"];
+           $data4[] = $datenoterepas1[0]["AVG(note_gout)"];
        }
 
         $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
@@ -75,6 +87,22 @@ class StudentController extends AbstractController
                     'pointBackgroundColor' => 'rgb(45,170,255)',
                     'pointBorderColor' => 'rgb(45,170,255)',
                     'data' => $data,
+                ],
+                [
+                    'label' => 'Note chaleur',
+                    'backgroundColor' => 'rgba(45,255,175, 0.5)',
+                    'borderColor' => 'rgb(45,175,255)',
+                    'pointBackgroundColor' => 'rgb(45,175,255)',
+                    'pointBorderColor' => 'rgb(45,175,255)',
+                    'data' => $data3,
+                ],
+                [
+                    'label' => 'Note gout',
+                    'backgroundColor' => 'rgba(255,20,255, 0.5)',
+                    'borderColor' => 'rgb(255,175,45)',
+                    'pointBackgroundColor' => 'rgb(50,175,255)',
+                    'pointBorderColor' => 'rgb(50,175,255)',
+                    'data' => $data4,
                 ],
                 [
                     'label' => 'Note Environement',
