@@ -51,8 +51,7 @@ class ClassesController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-    /**
+     /**
      * @Route("/valid", name="classe_valid", methods={"GET"})
      */
     function valid(): Response
