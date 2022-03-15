@@ -1,6 +1,15 @@
+<<<<<<< HEAD
 projectKey=mon-premier-sonar
 serverUrl=http://localhost:9000
 serverVersion=9.3.0.51899
 dashboardUrl=http://localhost:9000/dashboard?id=mon-premier-sonar
 ceTaskId=AX90esXmq4PTu_GcNpbr
 ceTaskUrl=http://localhost:9000/api/ce/task?id=AX90esXmq4PTu_GcNpbr
+=======
+projectKey=feedback---self
+serverUrl=http://localhost:9000
+serverVersion=9.3.0.51899
+dashboardUrl=http://localhost:9000/dashboard?id=feedback---self
+ceTaskId=AX90itpU9IUrMVn857II
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AX90itpU9IUrMVn857II
+>>>>>>> 44fc78804d57b7cc497dfd137103bef77c16df74
