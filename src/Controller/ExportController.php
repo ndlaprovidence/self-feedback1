@@ -69,25 +69,36 @@ class ExportController extends AbstractController
         }
         function getData(\TCPDF $pdf, $request, bool $refuse = false) { //ça a commencé en getdata, et ça finit en postdata lmao
             $bidule = 0;
-            
+            $incrementer = 0;
             //J'ai besoin d'un moyen de revenir sue cette ligne en despi, alors je vais dire bun.
             if($refuse==false){ //Refuse est ici pour des raisons de test, il sera retiré une fois que le debugging sera fini.
                 $pdf->SetFont('helvetica', 'B', 11);
-                $pdf->Text(50,50, "Note Repas",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                $pdf->Text(150,50, "Note Chaleur.",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                $pdf->Text(200,50, "Note Gout.",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                $pdf->Text(100,50, "Note Env.",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                $pdf->Text(250,50, "Commentaire",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+
                 $pdf->Text(25,50, "Id",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                $pdf->Text(50,50, "Note Repas",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                $pdf->Text(80,50, "Note Env.",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                $pdf->Text(110,50, "Note Chaleur",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                $pdf->Text(140,50, "Note Gout",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                
+                $pdf->Text(170,50, "Commentaire",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                //Note = Je prévois de mettre une boite de 66 W majuscules de long après l'id pour afficher un commentaire.
                 $pdf->SetFont('helvetica', '', 11);
                 foreach($request as $ligne) {
+                    $incrementer++;
                     $bidule+=5;
-                    $pdf->Text(50,50+$bidule, $ligne['Repas'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                    $pdf->Text(150,50+$bidule, $ligne['Chaleur'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                    $pdf->Text(200,50+$bidule, $ligne['Gout'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                    $pdf->Text(100,50+$bidule, $ligne['Environnement'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                    $pdf->Text(250,50+$bidule, $ligne['Commentaire'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
                     $pdf->Text(25,50+$bidule, $ligne['id'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                    $pdf->Text(50,50+$bidule, $ligne['Repas'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                    $pdf->Text(80,50+$bidule, $ligne['Environnement'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                    $pdf->Text(110,50+$bidule, $ligne['Chaleur'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                    $pdf->Text(140,50+$bidule, $ligne['Gout'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                    
+                    $pdf->Text(170,50+$bidule, $ligne['Commentaire'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                    
+                    if($incrementer%25==0) {
+                        $pdf->AddPage('L');
+                        $incrementer = 0;
+                        $bidule = 0;
+                    }
                 }
                 
             }
