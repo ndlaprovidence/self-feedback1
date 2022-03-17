@@ -18,20 +18,23 @@
                 <th>username</th>
                 <th>Roles</th>
                 <th>Password</th>
+                <th>Actions</th>
             </tr>
             <tr>
                 <th>{{ user.id }}</th>
                 <th>{{ user.username }}</th>
                 <th>{{ user.roles ? user.roles|json_encode : '' }}</th>
                 <th>{{ user.password }}</th>
+                <th>
+                    <a href="{{ path('user_edit', {'id': user.id}) }}" >edit</a>
+                    {{ include('user/_delete_form.html.twig') }}
+                </th>
             </tr>
         </tbody>
     </table>
-
     <a href="{{ path('user_index') }}" class="back_tolist">back to list</a>
 
-    <a href="{{ path('user_edit', {'id': user.id}) }}" >edit</a>
 
-    {{ include('user/_delete_form.html.twig') }}
+
 {% endblock %}
 
