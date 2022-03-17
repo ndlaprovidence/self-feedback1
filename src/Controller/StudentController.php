@@ -28,8 +28,6 @@ class StudentController extends AbstractController
         $student = $StudentRepository->findAll();
         
         $labels = [];
-        $data = [];
-        $data2 = [];
         $data3 = [];
         $data4 = [];
         $data5 = [];
@@ -46,8 +44,6 @@ class StudentController extends AbstractController
 
            if(isset($datenoterepas5[0]['note_date'])){
            $labels[] = $datenoterepas5[0]['note_date'];
-           $data[] = $datenoterepas5[0]['AVG(note_repas)'];
-           $data2[] = $datenoterepas5[0]['AVG(note_valeur_environnement)'];
            $data3[] = $datenoterepas5[0]["AVG(note_chaleur)"];
            $data4[] = $datenoterepas5[0]["AVG(note_gout)"];
            $data5[] = $datenoterepas5[0]["AVG(notequantite)"];
@@ -57,8 +53,6 @@ class StudentController extends AbstractController
        }
         if(isset($datenoterepas4[0]['note_date'])){
         $labels[] = $datenoterepas4[0]['note_date'];
-        $data[] = $datenoterepas4[0]['AVG(note_repas)'];
-        $data2[] = $datenoterepas4[0]['AVG(note_valeur_environnement)'];
         $data3[] = $datenoterepas4[0]["AVG(note_chaleur)"];
         $data4[] = $datenoterepas4[0]["AVG(note_gout)"];
         $data5[] = $datenoterepas4[0]["AVG(notequantite)"];
@@ -68,8 +62,6 @@ class StudentController extends AbstractController
     }
     if(isset($datenoterepas3[0]['note_date'])){
         $labels[] = $datenoterepas3[0]['note_date'];
-        $data[] = $datenoterepas3[0]['AVG(note_repas)'];
-        $data2[] = $datenoterepas3[0]['AVG(note_valeur_environnement)'];
         $data3[] = $datenoterepas3[0]["AVG(note_chaleur)"];
         $data4[] = $datenoterepas3[0]["AVG(note_gout)"];
         $data5[] = $datenoterepas3[0]["AVG(notequantite)"];
@@ -79,8 +71,6 @@ class StudentController extends AbstractController
     }
     if (isset($datenoterepas2[0]['note_date'])){
         $labels[] = $datenoterepas2[0]['note_date'];
-        $data[] = $datenoterepas2[0]['AVG(note_repas)'];
-        $data2[] = $datenoterepas2[0]['AVG(note_valeur_environnement)'];
         $data3[] = $datenoterepas2[0]["AVG(note_chaleur)"];
         $data4[] = $datenoterepas2[0]["AVG(note_gout)"];
         $data5[] = $datenoterepas2[0]["AVG(notequantite)"];
@@ -90,8 +80,6 @@ class StudentController extends AbstractController
     }
         if (isset($datenoterepas1[0]['note_date'])){
             $labels[] = $datenoterepas1[0]['note_date'];
-           $data[] = $datenoterepas1[0]['AVG(note_repas)'];
-           $data2[] = $datenoterepas1[0]['AVG(note_valeur_environnement)'];
            $data3[] = $datenoterepas1[0]["AVG(note_chaleur)"];
            $data4[] = $datenoterepas1[0]["AVG(note_gout)"];
            $data5[] = $datenoterepas1[0]["AVG(notequantite)"];
@@ -104,14 +92,6 @@ class StudentController extends AbstractController
         $chart->setData([
             'labels' => $labels,
             'datasets' => [
-                [
-                    'label' => 'Note repas',
-                    'backgroundColor' => 'rgba(45,170,255, 0.5)',
-                    'borderColor' => 'rgb(45,170,255)',
-                    'pointBackgroundColor' => 'rgb(45,170,255)',
-                    'pointBorderColor' => 'rgb(45,170,255)',
-                    'data' => $data,
-                ],
                 [
                     'label' => 'Note chaleur',
                     'backgroundColor' => 'rgba(45,255,175, 0.5)',
@@ -127,14 +107,6 @@ class StudentController extends AbstractController
                     'pointBackgroundColor' => 'rgb(50,175,255)',
                     'pointBorderColor' => 'rgb(50,175,255)',
                     'data' => $data4,
-                ],
-                [
-                    'label' => 'Note Environement',
-                    'backgroundColor' => 'rgba(242, 129, 35, 0.5)',
-                    'borderColor' => 'rgb(242, 129, 35)',
-                    'pointBackgroundColor' => 'rgb(242, 129, 35)',
-                    'pointBorderColor' => 'rgb(242, 129, 35)',
-                    'data' => $data2,
                 ],
                 [
                     'label' => 'Note Quantité',

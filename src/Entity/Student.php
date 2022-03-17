@@ -19,16 +19,6 @@ class Student
     private $id;
 
     /**
-     * @ORM\Column(type="smallint")
-     */
-    private $noteRepas;
-
-    /**
-     * @ORM\Column(type="smallint")
-     */
-    private $note_Valeur_Environnement;
-
-    /**
      * @ORM\Column(type="string", length=1000, nullable=true)
      */
     private $note_Commentaire;
@@ -76,30 +66,6 @@ class Student
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getNoteRepas(): ?int
-    {
-        return $this->noteRepas;
-    }
-
-    public function setNoteRepas(int $noteRepas): self
-    {
-        $this->noteRepas = $noteRepas;
-
-        return $this;
-    }
-
-    public function getNoteValeurEnvironnement(): ?int
-    {
-        return $this->note_Valeur_Environnement;
-    }
-
-    public function setNoteValeurEnvironnement(int $note_Valeur_Environnement): self
-    {
-        $this->note_Valeur_Environnement = $note_Valeur_Environnement;
-
-        return $this;
     }
 
     public function getNoteCommentaire(): ?string

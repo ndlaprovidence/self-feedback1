@@ -73,20 +73,16 @@ class ExportController extends AbstractController
             //J'ai besoin d'un moyen de revenir sue cette ligne en despi, alors je vais dire bun.
             if($refuse==false){ //Refuse est ici pour des raisons de test, il sera retiré une fois que le debugging sera fini.
                 $pdf->SetFont('helvetica', 'B', 11);
-                $pdf->Text(50,50, "Note Repas",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                $pdf->Text(150,50, "Note Chaleur.",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                $pdf->Text(200,50, "Note Gout.",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                $pdf->Text(100,50, "Note Env.",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                $pdf->Text(250,50, "Commentaire",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                $pdf->Text(50,50, "Note Chaleur.",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                $pdf->Text(150,50, "Note Gout.",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                $pdf->Text(100,50, "Commentaire",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
                 $pdf->Text(25,50, "Id",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
                 $pdf->SetFont('helvetica', '', 11);
                 foreach($request as $ligne) {
                     $bidule+=5;
-                    $pdf->Text(50,50+$bidule, $ligne['Repas'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                    $pdf->Text(150,50+$bidule, $ligne['Chaleur'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                    $pdf->Text(200,50+$bidule, $ligne['Gout'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                    $pdf->Text(100,50+$bidule, $ligne['Environnement'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                    $pdf->Text(250,50+$bidule, $ligne['Commentaire'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                    $pdf->Text(50,50+$bidule, $ligne['Chaleur'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                    $pdf->Text(150,50+$bidule, $ligne['Gout'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                    $pdf->Text(100,50+$bidule, $ligne['Commentaire'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
                     $pdf->Text(25,50+$bidule, $ligne['id'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
                 }
                 
