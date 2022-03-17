@@ -20,8 +20,15 @@ class ExportController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(Student::class);
         $product = $repository->findNotesFromWeek(); //Format Y/m/d '2022-02-28'
         //Mise en place de fonctions locales...
-        function setGraphTemplate(\TCPDF $pdf) { //Création du squelette du graphique.
-            $dates=["12/01","12/02","12/03","12/04","12/05"]; //Les dates, elles seront importées avec les notes.
+        function setDates($request) {//Création de l'array de dates"
+            $dates=[];
+            foreach($request as $ligne) {
+                array_push($dates, $ligne['Date']);
+            }
+            return array_unique($dates);
+        }
+        function setGraphTemplate(\TCPDF $pdf, $product) { //Création du squelette du graphique.
+            $dates=setDates($product); //Les dates, elles seront importées avec les notes.
 
             $count=-1;
             $count2=0;
@@ -70,17 +77,23 @@ class ExportController extends AbstractController
         function getData(\TCPDF $pdf, $request, bool $refuse = false) { //ça a commencé en getdata, et ça finit en postdata lmao
             $bidule = 0;
             $incrementer = 0;
+            $patate = "";
+            $dates=setDates($request); //Les dates, elles seront importées avec les notes.
+            array_push($dates);
+            foreach($dates as $blep) {
+                $patate.=$blep;
+            }
             //J'ai besoin d'un moyen de revenir sue cette ligne en despi, alors je vais dire bun.
             if($refuse==false){ //Refuse est ici pour des raisons de test, il sera retiré une fois que le debugging sera fini.
                 $pdf->SetFont('helvetica', 'B', 11);
-
+                $pdf->Text(25,40, $patate,false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
                 $pdf->Text(25,50, "Id",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
                 $pdf->Text(50,50, "Note Repas",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
                 $pdf->Text(80,50, "Note Env.",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
                 $pdf->Text(110,50, "Note Chaleur",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
                 $pdf->Text(140,50, "Note Gout",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                
-                $pdf->Text(170,50, "Commentaire",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                $pdf->Text(170,50, "Date",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                //$pdf->Text(170,50, "Commentaire",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
                 //Note = Je prévois de mettre une boite de 66 W majuscules de long après l'id pour afficher un commentaire.
                 $pdf->SetFont('helvetica', '', 11);
                 foreach($request as $ligne) {
@@ -91,8 +104,8 @@ class ExportController extends AbstractController
                     $pdf->Text(80,50+$bidule, $ligne['Environnement'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
                     $pdf->Text(110,50+$bidule, $ligne['Chaleur'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
                     $pdf->Text(140,50+$bidule, $ligne['Gout'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                    
-                    $pdf->Text(170,50+$bidule, $ligne['Commentaire'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                    $pdf->Text(170,50+$bidule, date("d/m", strtotime($ligne['Date'])),false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                    //$pdf->Text(170,50+$bidule, $ligne['Commentaire'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
                     
                     if($incrementer%25==0) {
                         $pdf->AddPage('L');
@@ -148,7 +161,7 @@ class ExportController extends AbstractController
         $pdf->Write(0, 'Indice de satisfaction globale');
         // Création du squelette du graphique
         getData($pdf, $product, false);
-        /// setGraphTemplate($pdf);
+        //setGraphTemplate($pdf, $product);
         // Ajout du contenu du graphique, voyez la fonction pour gérer ça.
         /// insertIntoGraph($pdf);
 
