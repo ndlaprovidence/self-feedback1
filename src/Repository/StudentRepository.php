@@ -122,7 +122,7 @@ class StudentRepository extends ServiceEntityRepository
         $madate3 = new DateTime(date("Y-m-d"));
         $madate3->sub(new DateInterval('P4D'));
         $madate = new DateTime(date("Y-m-d"));
-        $sql = 'SELECT note_repas as "Repas",note_chaleur as "Chaleur", note_gout as "Gout", note_valeur_environnement as "Environnement", note_date as "Date", note_Commentaire as "Commentaire", id FROM student WHERE note_date <= "'.$madate->format('Y-m-d').'" AND note_date >= "'.$madate3->format("Y-m-d").'";';
+        $sql = 'SELECT note_chaleur as "Chaleur", notequantite ,noteacceuil , notediversite, notehygiene, note_gout as "Gout", note_date as "Date", note_Commentaire as "Commentaire", id FROM student WHERE note_date <= "'.$madate->format('Y-m-d').'" AND note_date >= "'.$madate3->format("Y-m-d").'";';
         $query = $conn->executeQuery($sql);
         $result = $query->fetchAll();
         return $result;
