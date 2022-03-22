@@ -21,6 +21,7 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
+    .addEntry('appVue', './assets/appVue.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
@@ -54,6 +55,8 @@ Encore
         config.useBuiltIns = 'usage';
         config.corejs = 3;
     })
+
+    .enableVueLoader()
 
     // enables Sass/SCSS support
     //.enableSassLoader()
