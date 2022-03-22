@@ -6,13 +6,18 @@ use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Logo\Logo;
 use Endroid\QrCode\Color\Color;
 use Endroid\QrCode\Label\Label;
+use Endroid\QrCode\Builder\Builder;
 use App\Repository\QrcodeRepository;
 use Endroid\QrCode\Writer\PngWriter;
 use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\Label\Font\NotoSans;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Endroid\QrCode\Label\Alignment\LabelAlignmentCenter;
 use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
 use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -26,7 +31,7 @@ class QRcodeController extends AbstractController
     public function index(QrcodeRepository $qrcodeRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
-        $qrcodeRepository->verifyToken();
+        
         $logoPath = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'ndlp.png';
         $token = $qrcodeRepository->getTokenToday();
         if ($token == "")
@@ -37,7 +42,7 @@ class QRcodeController extends AbstractController
             $writer = new PngWriter();
             
             // Create QR code
-           include('../adresse.php');
+            include('../adresse.php');
             $qrCode = QrCode::create(ADRESSE.'student/new?token='.$token)
                 ->setEncoding(new Encoding('UTF-8'))
                 ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())

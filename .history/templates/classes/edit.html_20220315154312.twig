@@ -1,0 +1,21 @@
+<<<<<<< HEAD
+{% extends 'base-edit-classe.html.twig' %}
+=======
+{% extends 'base-edit-user.html.twig' %}
+>>>>>>> origin/LAB_NewNote
+
+{% block title %}Edit Classes{% endblock %}
+
+{% block body %}
+<style>
+main {
+  margin-left: 0px;
+}
+</style>
+    <h1>Edit Classes</h1>
+
+    {{ include('classes/_form.html.twig', {'button_label': 'Update'}) }}
+
+
+    {{ include('classes/_delete_form.html.twig') }}
+{% endblock %}

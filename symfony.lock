@@ -436,9 +436,6 @@
             "./tests/bootstrap.php"
         ]
     },
-    "symfony/polyfill-intl-grapheme": {
-        "version": "v1.23.1"
-    },
     "symfony/polyfill-intl-icu": {
         "version": "v1.23.0"
     },
@@ -521,9 +518,6 @@
     },
     "symfony/stopwatch": {
         "version": "v4.4.27"
-    },
-    "symfony/string": {
-        "version": "v5.4.0"
     },
     "symfony/translation": {
         "version": "4.4",
