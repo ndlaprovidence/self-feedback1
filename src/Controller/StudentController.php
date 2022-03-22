@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\ChartChoice;
 use DateTime;
 use App\Entity\Student;
 use App\Form\StudentType;
@@ -13,6 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\QrcodeRepository;
+
+use function PHPSTORM_META\type;
 
 /**
  * @Route("/student")
@@ -27,7 +30,7 @@ class StudentController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         $student = $StudentRepository->findAll();
-        
+
         $labels = [];
         $data3 = [];
         $data4 = [];
@@ -43,53 +46,53 @@ class StudentController extends AbstractController
         dump($datenoterepas1);
         dump($datenoterepas2);
 
-           if(isset($datenoterepas5[0]['note_date'])){
-           $labels[] = $datenoterepas5[0]['note_date'];
-           $data3[] = $datenoterepas5[0]["AVG(note_chaleur)"];
-           $data4[] = $datenoterepas5[0]["AVG(note_gout)"];
-           $data5[] = $datenoterepas5[0]["AVG(notequantite)"];
-           $data6[] = $datenoterepas5[0]["AVG(noteacceuil)"];
-           $data7[] = $datenoterepas5[0]["AVG(notediversite)"];
-           $data8[] = $datenoterepas5[0]["AVG(notehygiene)"];
-       }
-        if(isset($datenoterepas4[0]['note_date'])){
-        $labels[] = $datenoterepas4[0]['note_date'];
-        $data3[] = $datenoterepas4[0]["AVG(note_chaleur)"];
-        $data4[] = $datenoterepas4[0]["AVG(note_gout)"];
-        $data5[] = $datenoterepas4[0]["AVG(notequantite)"];
-        $data6[] = $datenoterepas4[0]["AVG(noteacceuil)"];
-        $data7[] = $datenoterepas4[0]["AVG(notediversite)"];
-        $data8[] = $datenoterepas4[0]["AVG(notehygiene)"];
-    }
-    if(isset($datenoterepas3[0]['note_date'])){
-        $labels[] = $datenoterepas3[0]['note_date'];
-        $data3[] = $datenoterepas3[0]["AVG(note_chaleur)"];
-        $data4[] = $datenoterepas3[0]["AVG(note_gout)"];
-        $data5[] = $datenoterepas3[0]["AVG(notequantite)"];
-        $data6[] = $datenoterepas3[0]["AVG(noteacceuil)"];
-        $data7[] = $datenoterepas3[0]["AVG(notediversite)"];
-        $data8[] = $datenoterepas3[0]["AVG(notehygiene)"];
-    }
-    if (isset($datenoterepas2[0]['note_date'])){
-        $labels[] = $datenoterepas2[0]['note_date'];
-        $data3[] = $datenoterepas2[0]["AVG(note_chaleur)"];
-        $data4[] = $datenoterepas2[0]["AVG(note_gout)"];
-        $data5[] = $datenoterepas2[0]["AVG(notequantite)"];
-        $data6[] = $datenoterepas2[0]["AVG(noteacceuil)"];
-        $data7[] = $datenoterepas2[0]["AVG(notediversite)"];
-        $data8[] = $datenoterepas2[0]["AVG(notehygiene)"];
-    }
-        if (isset($datenoterepas1[0]['note_date'])){
+        if (isset($datenoterepas5[0]['note_date'])) {
+            $labels[] = $datenoterepas5[0]['note_date'];
+            $data3[] = $datenoterepas5[0]["AVG(note_chaleur)"];
+            $data4[] = $datenoterepas5[0]["AVG(note_gout)"];
+            $data5[] = $datenoterepas5[0]["AVG(notequantite)"];
+            $data6[] = $datenoterepas5[0]["AVG(noteacceuil)"];
+            $data7[] = $datenoterepas5[0]["AVG(notediversite)"];
+            $data8[] = $datenoterepas5[0]["AVG(notehygiene)"];
+        }
+        if (isset($datenoterepas4[0]['note_date'])) {
+            $labels[] = $datenoterepas4[0]['note_date'];
+            $data3[] = $datenoterepas4[0]["AVG(note_chaleur)"];
+            $data4[] = $datenoterepas4[0]["AVG(note_gout)"];
+            $data5[] = $datenoterepas4[0]["AVG(notequantite)"];
+            $data6[] = $datenoterepas4[0]["AVG(noteacceuil)"];
+            $data7[] = $datenoterepas4[0]["AVG(notediversite)"];
+            $data8[] = $datenoterepas4[0]["AVG(notehygiene)"];
+        }
+        if (isset($datenoterepas3[0]['note_date'])) {
+            $labels[] = $datenoterepas3[0]['note_date'];
+            $data3[] = $datenoterepas3[0]["AVG(note_chaleur)"];
+            $data4[] = $datenoterepas3[0]["AVG(note_gout)"];
+            $data5[] = $datenoterepas3[0]["AVG(notequantite)"];
+            $data6[] = $datenoterepas3[0]["AVG(noteacceuil)"];
+            $data7[] = $datenoterepas3[0]["AVG(notediversite)"];
+            $data8[] = $datenoterepas3[0]["AVG(notehygiene)"];
+        }
+        if (isset($datenoterepas2[0]['note_date'])) {
+            $labels[] = $datenoterepas2[0]['note_date'];
+            $data3[] = $datenoterepas2[0]["AVG(note_chaleur)"];
+            $data4[] = $datenoterepas2[0]["AVG(note_gout)"];
+            $data5[] = $datenoterepas2[0]["AVG(notequantite)"];
+            $data6[] = $datenoterepas2[0]["AVG(noteacceuil)"];
+            $data7[] = $datenoterepas2[0]["AVG(notediversite)"];
+            $data8[] = $datenoterepas2[0]["AVG(notehygiene)"];
+        }
+        if (isset($datenoterepas1[0]['note_date'])) {
             $labels[] = $datenoterepas1[0]['note_date'];
-           $data3[] = $datenoterepas1[0]["AVG(note_chaleur)"];
-           $data4[] = $datenoterepas1[0]["AVG(note_gout)"];
-           $data5[] = $datenoterepas1[0]["AVG(notequantite)"];
-           $data6[] = $datenoterepas1[0]["AVG(noteacceuil)"];
-           $data7[] = $datenoterepas1[0]["AVG(notediversite)"];
-           $data8[] = $datenoterepas1[0]["AVG(notehygiene)"];
-       }
+            $data3[] = $datenoterepas1[0]["AVG(note_chaleur)"];
+            $data4[] = $datenoterepas1[0]["AVG(note_gout)"];
+            $data5[] = $datenoterepas1[0]["AVG(notequantite)"];
+            $data6[] = $datenoterepas1[0]["AVG(noteacceuil)"];
+            $data7[] = $datenoterepas1[0]["AVG(notediversite)"];
+            $data8[] = $datenoterepas1[0]["AVG(notehygiene)"];
+        }
 
-        $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
+        $chart = $chartBuilder->createChart('horizontalBar');
         $chart->setData([
             'labels' => $labels,
             'datasets' => [
@@ -154,62 +157,74 @@ class StudentController extends AbstractController
             ]
         ]);
 
+
         return $this->render('student/index.html.twig', [
             'students' => $StudentRepository->findAll(),
             'chart' => $chart,
+        ]);
+    }
+    /**
+     * @Route("/", name="student_index", methods={"GET"})
+     */
+    function choiceChartType(Request $request): Response
+    {
+        $chartType = new ChartChoice();
+
+        $form = $this->createForm(ChartChoice::class, $chartType);
+        $form->handleRequest($request);
+
+        return $this->render('student/index.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 
     /**
      * @Route("/new", name="student_new", methods={"GET","POST"})
      */
-    function new (Request $request, QrcodeRepository $qrcodeRepository): Response {
+    function new(Request $request, QrcodeRepository $qrcodeRepository): Response
+    {
         $token = $qrcodeRepository->getTokenToday();
         $token2 = $_GET['token'];
-        if ($token == $token2)
-        {
+        if ($token == $token2) {
             $this->denyAccessUnlessGranted('ROLE_USER');
 
-        $student = new Student();
-        $student->setNoteDate(new DateTime());
-        $form = $this->createForm(StudentType::class, $student);
-        $form->handleRequest($request);
+            $student = new Student();
+            $student->setNoteDate(new DateTime());
+            $form = $this->createForm(StudentType::class, $student);
+            $form->handleRequest($request);
 
-        dump($request);
-        if($form->isSubmitted()) {
-            dump($form->isValid());
-        }
-        dump($form->getErrors());
+            dump($request);
+            if ($form->isSubmitted()) {
+                dump($form->isValid());
+            }
+            dump($form->getErrors());
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($student);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($student);
 
-            // dump($request);
-            // $CurrentDate=$request->get('student')['note_date'];
-            //$CurrentDate=date("d/m/Y");
+                // dump($request);
+                // $CurrentDate=$request->get('student')['note_date'];
+                //$CurrentDate=date("d/m/Y");
 
-            $entityManager->flush();
-            return $this->redirectToRoute('student_valid', [], Response::HTTP_SEE_OTHER);
-        }
+                $entityManager->flush();
+                return $this->redirectToRoute('student_valid', [], Response::HTTP_SEE_OTHER);
+            }
 
-        return $this->render('student/new.html.twig', [
-            'student' => $student,
-            'form' => $form->createView(),
-        ]);
-        }
-        else
-        {
+            return $this->render('student/new.html.twig', [
+                'student' => $student,
+                'form' => $form->createView(),
+            ]);
+        } else {
             return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
         }
-        
     }
-        /**
+    /**
      * @Route("/valid", name="student_valid", methods={"GET"})
      */
-     function valid(): Response
+    function valid(): Response
     {
-        
+
         return $this->render('student/valid.html.twig', [
             'titre' => 'Votre note à été enregisté !',
         ]);
@@ -228,69 +243,69 @@ class StudentController extends AbstractController
         // $data[] = $datenoterepas[0]['note_repas'];
         // $data2[] = $datenoterepas[0]['note_valeur_environnement'];
         // }
-        ?><?php
-        header('Content-Type: text/csv;');
-        header('Content-Disposition: attachment; filename="Liste-candidature.csv"');
-        
-        $data = $StudentRepository->findAll();
-        ?>
-        "note Repas";"note Environnement";" Commentaire";" Date";
-        <?php  
-        foreach($data as $d){
-            echo '"'.$d->noteRepas.'";"'.$d->noteValeurEnvironnement.'";"'.$d->noteCommentaire.'";"'.$d->noteDate.'";'.";\n";
+?><?php
+            header('Content-Type: text/csv;');
+            header('Content-Disposition: attachment; filename="Liste-candidature.csv"');
+
+            $data = $StudentRepository->findAll();
+            ?>
+"note Repas";"note Environnement";" Commentaire";" Date";
+<?php
+        foreach ($data as $d) {
+            echo '"' . $d->noteRepas . '";"' . $d->noteValeurEnvironnement . '";"' . $d->noteCommentaire . '";"' . $d->noteDate . '";' . ";\n";
         }
-        ?><?php
-    }
+?><?php
+        }
 
-    /**
-     * @Route("/{id}", name="student_show", methods={"GET"})
-     */
-    public function show(Student $student): Response
-    {
-        $this->denyAccessUnlessGranted('ROLE_USER');
+        /**
+         * @Route("/{id}", name="student_show", methods={"GET"})
+         */
+        public function show(Student $student): Response
+        {
+            $this->denyAccessUnlessGranted('ROLE_USER');
 
-        return $this->render('student/show.html.twig', [
-            'student' => $student,
-        ]);
-    }
+            return $this->render('student/show.html.twig', [
+                'student' => $student,
+            ]);
+        }
 
-    /**
-     * @Route("/{id}/edit", name="student_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Student $student): Response
-    {
+        /**
+         * @Route("/{id}/edit", name="student_edit", methods={"GET","POST"})
+         */
+        public function edit(Request $request, Student $student): Response
+        {
 
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+            $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        $form = $this->createForm(StudentType::class, $student);
-        $form->handleRequest($request);
+            $form = $this->createForm(StudentType::class, $student);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->getDoctrine()->getManager()->flush();
+
+                return $this->redirectToRoute('student_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->render('student/edit.html.twig', [
+                'student' => $student,
+                'form' => $form->createView(),
+            ]);
+        }
+
+        /**
+         * @Route("/{id}", name="student_delete", methods={"POST"})
+         */
+        public function delete(Request $request, Student $student): Response
+        {
+
+            $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+
+            if ($this->isCsrfTokenValid('delete' . $student->getId(), $request->request->get('_token'))) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($student);
+                $entityManager->flush();
+            }
 
             return $this->redirectToRoute('student_index', [], Response::HTTP_SEE_OTHER);
         }
-
-        return $this->render('student/edit.html.twig', [
-            'student' => $student,
-            'form' => $form->createView(),
-        ]);
     }
-
-    /**
-     * @Route("/{id}", name="student_delete", methods={"POST"})
-     */
-    public function delete(Request $request, Student $student): Response
-    {
-
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
-
-        if ($this->isCsrfTokenValid('delete' . $student->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($student);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('student_index', [], Response::HTTP_SEE_OTHER);
-    }
-}
