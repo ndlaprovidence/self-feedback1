@@ -17,25 +17,6 @@ class StudentType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('note_repas', ChoiceType::class, [
-            'choices' => [
-                " " => 1,
-                "  " => 2,
-                "  " => 3,
-                "   " => 4,
-                "    " => 5,
-            ],
-            'choice_attr' => [
-                '1' => ['id' => '1'],
-                '2' => ['id' => '2'],
-                '3' => ['id' => '3'],
-                '4' => ['id' => '4'],
-                '5' => ['id' => '5'],
-                ],
-            'expanded' => true,
-            'multiple' => false,
-
-        ]);
         $builder->add('note_gout', ChoiceType::class, [
             'choices' => [
                 " " => 1,
@@ -146,25 +127,6 @@ class StudentType extends AbstractType
                 '4' => ['id' => '4'],
                 '5' => ['id' => '5'],
                 ],
-            'expanded' => true,
-            'multiple' => false,
-
-        ]);
-        $builder->add('note_valeur_environnement', ChoiceType::class, [
-            'choices' => [
-                ' ' => 1,
-                '  ' => 2,
-                '  ' => 3,
-                '   ' => 4,
-                '    ' => 5,
-            ],
-            'choice_attr' => [
-            '1' => ['id' => '1'],
-            '2' => ['id' => '2'],
-            '3' => ['id' => '3'],
-            '4' => ['id' => '4'],
-            '5' => ['id' => '5'],
-            ],
             'expanded' => true,
             'multiple' => false,
 
