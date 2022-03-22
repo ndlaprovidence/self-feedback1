@@ -7,13 +7,13 @@ use App\Form\StudentType;
 use App\Repository\QrcodeRepository;
 use App\Repository\StudentRepository;
 use DateTime;
-use League\Csv\Writer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
+use League\Csv\Writer;
 
 /**
  * @Route("/student")
@@ -246,16 +246,22 @@ class StudentController extends AbstractController
     public function csvWeek(StudentRepository $StudentRepository): Response
     {
 
-        //we fetch the info from a DB using a PDO object
-        $sth = $StudentRepository->getDateEnv();
+//we fetch the info from a DB using a PDO object
+        $sth = $dbh->prepare(
+            "SELECT firstname, lastname, email FROM users LIMIT 200"
+        );
+//because we don't want to duplicate the data for each row
+        // PDO::FETCH_NUM could also have been used
+        $sth->setFetchMode(PDO::FETCH_ASSOC);
+        $sth->execute();
 
-        //we create the CSV into memory
+//we create the CSV into memory
         $csv = Writer::createFromFileObject(new SplTempFileObject());
 
-        //we insert the CSV header
-        $csv->insertOne(['note_valeur_environnement', 'note_date']);
+//we insert the CSV header
+        $csv->insertOne(['firstname', 'lastname', 'email']);
 
-        // The PDOStatement Object implements the Traversable Interface
+// The PDOStatement Object implements the Traversable Interface
         // that's why Writer::insertAll can directly insert
         // the data into the CSV
         $csv->insertAll($sth);

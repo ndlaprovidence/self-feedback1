@@ -253,7 +253,7 @@ class StudentController extends AbstractController
         $csv = Writer::createFromFileObject(new SplTempFileObject());
 
         //we insert the CSV header
-        $csv->insertOne(['note_valeur_environnement', 'note_date']);
+        $csv->insertOne(['note_valeur_environnement' ,'note_date']);
 
         // The PDOStatement Object implements the Traversable Interface
         // that's why Writer::insertAll can directly insert

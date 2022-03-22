@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Student;
 use App\Form\StudentType;
 use App\Repository\QrcodeRepository;
-use App\Repository\StudentRepository;
+use App\Repository\studentRepository;
 use DateTime;
 use League\Csv\Writer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,11 +23,11 @@ class StudentController extends AbstractController
     /**
      * @Route("/", name="student_index", methods={"GET"})
      */
-    public function index(StudentRepository $StudentRepository, ChartBuilderInterface $chartBuilder): Response
+    public function index(StudentRepository $studentRepository, ChartBuilderInterface $chartBuilder): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
-        $student = $StudentRepository->findAll();
+        $student = $studentRepository->findAll();
 
         $labels = [];
         $data = [];
@@ -38,11 +38,11 @@ class StudentController extends AbstractController
         $data6 = [];
         $data7 = [];
         $data8 = [];
-        $datenoterepas1 = $StudentRepository->getDateRepas1();
-        $datenoterepas2 = $StudentRepository->getDateRepas2();
-        $datenoterepas3 = $StudentRepository->getDateRepas3();
-        $datenoterepas4 = $StudentRepository->getDateRepas4();
-        $datenoterepas5 = $StudentRepository->getDateRepas5();
+        $datenoterepas1 = $studentRepository->getDateRepas1();
+        $datenoterepas2 = $studentRepository->getDateRepas2();
+        $datenoterepas3 = $studentRepository->getDateRepas3();
+        $datenoterepas4 = $studentRepository->getDateRepas4();
+        $datenoterepas5 = $studentRepository->getDateRepas5();
         dump($datenoterepas1);
         dump($datenoterepas2);
 
@@ -184,7 +184,7 @@ class StudentController extends AbstractController
         ]);
 
         return $this->render('student/index.html.twig', [
-            'students' => $StudentRepository->findAll(),
+            'students' => $studentRepository->findAll(),
             'chart' => $chart,
         ]);
     }
@@ -243,17 +243,17 @@ class StudentController extends AbstractController
     /**
      *  @Route("/", name="student_csvweek", methods={"GET"})
      */
-    public function csvWeek(StudentRepository $StudentRepository): Response
+    public function csvWeek(StudentRepository $studentRepository): Response
     {
 
         //we fetch the info from a DB using a PDO object
-        $sth = $StudentRepository->getDateEnv();
+        $sth = $studentRepository->getDateEnv();
 
         //we create the CSV into memory
         $csv = Writer::createFromFileObject(new SplTempFileObject());
 
         //we insert the CSV header
-        $csv->insertOne(['note_valeur_environnement', 'note_date']);
+        $csv->insertOne(['note_valeur_environnement' ,'note_date']);
 
         // The PDOStatement Object implements the Traversable Interface
         // that's why Writer::insertAll can directly insert

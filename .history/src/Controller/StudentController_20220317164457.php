@@ -247,13 +247,13 @@ class StudentController extends AbstractController
     {
 
         //we fetch the info from a DB using a PDO object
-        $sth = $StudentRepository->getDateEnv();
+        $sth = getDateEnv();
 
         //we create the CSV into memory
         $csv = Writer::createFromFileObject(new SplTempFileObject());
 
         //we insert the CSV header
-        $csv->insertOne(['note_valeur_environnement', 'note_date']);
+        $csv->insertOne(['firstname', 'lastname', 'email']);
 
         // The PDOStatement Object implements the Traversable Interface
         // that's why Writer::insertAll can directly insert

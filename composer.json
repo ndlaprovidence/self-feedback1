@@ -11,6 +11,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.10",
         "endroid/qr-code": "^4.4",
+        "league/csv": "^9.8",
         "phpdocumentor/reflection-docblock": "^5.3",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "4.4.*",
@@ -39,7 +40,7 @@
         "symfony/yaml": "4.4.*",
         "symfonycasts/verify-email-bundle": "^1.6",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^3.3"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.4",

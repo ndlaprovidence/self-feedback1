@@ -115,6 +115,9 @@
     "laminas/laminas-code": {
         "version": "4.4.3"
     },
+    "league/csv": {
+        "version": "9.8.0"
+    },
     "monolog/monolog": {
         "version": "1.26.1"
     },

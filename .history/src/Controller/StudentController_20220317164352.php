@@ -246,16 +246,20 @@ class StudentController extends AbstractController
     public function csvWeek(StudentRepository $StudentRepository): Response
     {
 
-        //we fetch the info from a DB using a PDO object
-        $sth = $StudentRepository->getDateEnv();
+//we fetch the info from a DB using a PDO object
+        
+//because we don't want to duplicate the data for each row
+        // PDO::FETCH_NUM could also have been used
+        $sth->setFetchMode(PDO::FETCH_ASSOC);
+        $sth->execute();
 
-        //we create the CSV into memory
+//we create the CSV into memory
         $csv = Writer::createFromFileObject(new SplTempFileObject());
 
-        //we insert the CSV header
-        $csv->insertOne(['note_valeur_environnement', 'note_date']);
+//we insert the CSV header
+        $csv->insertOne(['firstname', 'lastname', 'email']);
 
-        // The PDOStatement Object implements the Traversable Interface
+// The PDOStatement Object implements the Traversable Interface
         // that's why Writer::insertAll can directly insert
         // the data into the CSV
         $csv->insertAll($sth);

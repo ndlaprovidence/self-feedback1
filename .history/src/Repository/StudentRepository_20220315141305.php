@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Repository;
-
-use App\Entity\Student;
-use DateInterval;
 use DateTime;
+use DateInterval;
+use App\Entity\Student;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -24,10 +23,10 @@ class StudentRepository extends ServiceEntityRepository
     {
         $conn = $this->getEntityManager()->getConnection();
         $madate = date("Y-m-d");
-        $madate2 = date("d") - 7;
-        $madate3 = date("Y-m") . "-" . $madate2;
+        $madate2 = date("d")-7;
+        $madate3 = date("Y-m")."-".$madate2;
         //dump($madate3." ".$madate);
-        $sql = 'SELECT note_repas, note_valeur_environnement, note_date FROM student WHERE note_date <= "' . $madate . '" AND note_date >= "' . $madate3 . '";';
+        $sql = 'SELECT note_repas, note_valeur_environnement, note_date FROM student WHERE note_date <= "'.$madate.'" AND note_date >= "'.$madate3.'";';
         $query = $conn->executeQuery($sql);
         $result = $query->fetchAll();
         //dump($result);
@@ -37,7 +36,7 @@ class StudentRepository extends ServiceEntityRepository
     {
         $conn = $this->getEntityManager()->getConnection();
         $madate = new DateTime(date("Y-m-d"));
-        $sql = 'SELECT AVG(note_repas), AVG(note_valeur_environnement), note_date FROM student WHERE note_date = "' . $madate->format("Y-m-d") . '";';
+        $sql = 'SELECT AVG(note_repas), AVG(note_valeur_environnement), note_date FROM student WHERE note_date = "'.$madate->format("Y-m-d").'";';
         $query = $conn->executeQuery($sql);
         $result = $query->fetchAll();
         return $result;
@@ -47,7 +46,7 @@ class StudentRepository extends ServiceEntityRepository
         $conn = $this->getEntityManager()->getConnection();
         $madate = new DateTime(date("Y-m-d"));
         $madate->sub(new DateInterval('P1D'));
-        $sql = 'SELECT AVG(note_repas), AVG(note_valeur_environnement), note_date FROM student WHERE note_date = "' . $madate->format("Y-m-d") . '";';
+        $sql = 'SELECT AVG(note_repas), AVG(note_valeur_environnement), note_date FROM student WHERE note_date = "'.$madate->format("Y-m-d").'";';
         $query = $conn->executeQuery($sql);
         $result = $query->fetchAll();
         return $result;
@@ -58,7 +57,7 @@ class StudentRepository extends ServiceEntityRepository
         $madate = new DateTime(date("Y-m-d"));
         $madate->sub(new DateInterval('P2D'));
         //dump($madate3." ".$madate);
-        $sql = 'SELECT AVG(note_repas), AVG(note_valeur_environnement), note_date FROM student WHERE note_date = "' . $madate->format("Y-m-d") . '";';
+        $sql = 'SELECT AVG(note_repas), AVG(note_valeur_environnement), note_date FROM student WHERE note_date = "'.$madate->format("Y-m-d").'";';
         $query = $conn->executeQuery($sql);
         $result = $query->fetchAll();
         //dump($result);
@@ -70,7 +69,7 @@ class StudentRepository extends ServiceEntityRepository
         $madate = new DateTime(date("Y-m-d"));
         $madate->sub(new DateInterval('P3D'));
         //dump($madate3." ".$madate);
-        $sql = 'SELECT AVG(note_repas), AVG(note_valeur_environnement), note_date FROM student WHERE note_date = "' . $madate->format("Y-m-d") . '";';
+        $sql = 'SELECT AVG(note_repas), AVG(note_valeur_environnement), note_date FROM student WHERE note_date = "'.$madate->format("Y-m-d").'";';
         $query = $conn->executeQuery($sql);
         $result = $query->fetchAll();
         //dump($result);
@@ -82,7 +81,7 @@ class StudentRepository extends ServiceEntityRepository
         $madate = new DateTime(date("Y-m-d"));
         $madate->sub(new DateInterval('P4D'));
         //dump($madate3." ".$madate);
-        $sql = 'SELECT AVG(note_repas), AVG(note_valeur_environnement), note_date FROM student WHERE note_date = "' . $madate->format("Y-m-d") . '";';
+        $sql = 'SELECT AVG(note_repas), AVG(note_valeur_environnement), note_date FROM student WHERE note_date = "'.$madate->format("Y-m-d").'";';
         $query = $conn->executeQuery($sql);
         $result = $query->fetchAll();
         //dump($result);
@@ -92,10 +91,10 @@ class StudentRepository extends ServiceEntityRepository
     {
         $conn = $this->getEntityManager()->getConnection();
         $madate = date("Y-m-d");
-        $madate2 = date("d") - 7;
-        $madate3 = date("Y-m") . "-" . $madate2;
+        $madate2 = date("d")-7;
+        $madate3 = date("Y-m")."-".$madate2;
         //dump($madate3." ".$madate);
-        $sql = 'SELECT note_valeur_environnement, note_date FROM student WHERE note_date <= "' . $madate . '" AND note_date >= "' . $madate3 . '";';
+        $sql = 'SELECT note_valeur_environnement, note_date FROM student WHERE note_date <= "'.$madate.'" AND note_date >= "'.$madate3.'";';
         $query = $conn->executeQuery($sql);
         $result = $query->fetchAll();
         //dump($result);
@@ -107,26 +106,26 @@ class StudentRepository extends ServiceEntityRepository
     /*
     public function findByExampleField($value)
     {
-    return $this->createQueryBuilder('s')
-    ->andWhere('s.exampleField = :val')
-    ->setParameter('val', $value)
-    ->orderBy('s.id', 'ASC')
-    ->setMaxResults(10)
-    ->getQuery()
-    ->getResult()
-    ;
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('s.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
     }
-     */
+    */
 
     /*
-public function findOneBySomeField($value): ?Student
-{
-return $this->createQueryBuilder('s')
-->andWhere('s.exampleField = :val')
-->setParameter('val', $value)
-->getQuery()
-->getOneOrNullResult()
-;
-}
- */
+    public function findOneBySomeField($value): ?Student
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.exampleField = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+    */
 }
