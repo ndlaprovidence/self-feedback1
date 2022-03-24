@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ChartChoice;
+use App\Form\ChartChoiceType;
 use DateTime;
 use App\Entity\Student;
 use App\Form\StudentType;
@@ -14,6 +15,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\QrcodeRepository;
+use Doctrine\DBAL\Types\TextType;
+use Symfony\Component\Form\Event\SubmitEvent;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 
 use function PHPSTORM_META\type;
 
@@ -22,14 +27,21 @@ use function PHPSTORM_META\type;
  */
 class StudentController extends AbstractController
 {
+
     /**
      * @Route("/", name="student_index", methods={"GET"})
+     * 
      */
-    public function index(StudentRepository $StudentRepository, ChartBuilderInterface $chartBuilder): Response
+    public function index(Request $request, StudentRepository $studentRepository, ChartBuilderInterface $chartBuilder): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
-        $student = $StudentRepository->findAll();
+        $typeChartChoice = $request->get('type');
+        if (!isset($typeChartChoice)) {
+            $typeChartChoice = "bar";
+        }
+
+        $student = $studentRepository->findAll();
 
         $labels = [];
         $data3 = [];
@@ -38,11 +50,11 @@ class StudentController extends AbstractController
         $data6 = [];
         $data7 = [];
         $data8 = [];
-        $datenoterepas1 = $StudentRepository->getDateRepas1();
-        $datenoterepas2 = $StudentRepository->getDateRepas2();
-        $datenoterepas3 = $StudentRepository->getDateRepas3();
-        $datenoterepas4 = $StudentRepository->getDateRepas4();
-        $datenoterepas5 = $StudentRepository->getDateRepas5();
+        $datenoterepas1 = $studentRepository->getDateRepas1();
+        $datenoterepas2 = $studentRepository->getDateRepas2();
+        $datenoterepas3 = $studentRepository->getDateRepas3();
+        $datenoterepas4 = $studentRepository->getDateRepas4();
+        $datenoterepas5 = $studentRepository->getDateRepas5();
         dump($datenoterepas1);
         dump($datenoterepas2);
 
@@ -92,7 +104,7 @@ class StudentController extends AbstractController
             $data8[] = $datenoterepas1[0]["AVG(notehygiene)"];
         }
 
-        $chart = $chartBuilder->createChart('horizontalBar');
+        $chart = $chartBuilder->createChart($typeChartChoice);
         $chart->setData([
             'labels' => $labels,
             'datasets' => [
@@ -156,26 +168,32 @@ class StudentController extends AbstractController
                 ]]
             ]
         ]);
-
-
+        
         return $this->render('student/index.html.twig', [
-            'students' => $StudentRepository->findAll(),
+            'students' => $studentRepository->findAll(),
             'chart' => $chart,
         ]);
     }
+
     /**
-     * @Route("/", name="student_index", methods={"GET"})
+     * @Route("/chart_choice", name="student_chart_choice", methods={"GET","POST"})
      */
     function choiceChartType(Request $request): Response
     {
         $chartType = new ChartChoice();
 
-        $form = $this->createForm(ChartChoice::class, $chartType);
+        $form = $this->createForm(ChartChoiceType::class, $chartType);
+
         $form->handleRequest($request);
 
-        return $this->render('student/index.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        if ($form->isSubmitted()) {
+            $chartChoice = $_POST["chart_choice"];
+            return $this->redirect("/student/?type=".$chartChoice['type']);
+        } else {
+            return $this->render('student/selectChartType.html.twig', [
+                'form' => $form->createView(),
+            ]);
+        }
     }
 
     /**
@@ -232,12 +250,12 @@ class StudentController extends AbstractController
     /**
      *  @Route("/", name="student_csvweek", methods={"GET"})
      */
-    function csvWeek(StudentRepository $StudentRepository): Response
+    function csvWeek(StudentRepository $studentRepository)
     {
         // $labels = [];
         // $data = [];
         // $data2 = [];
-        // $datenoterepas = $StudentRepository->getDateRepas();
+        // $datenoterepas = $studentRepository->getDateRepas();
         // for ($i = 0; $i < count($datenoterepas);$i++){
         // $labels[] = $datenoterepas[0]['note_date'];
         // $data[] = $datenoterepas[0]['note_repas'];
@@ -247,7 +265,7 @@ class StudentController extends AbstractController
             header('Content-Type: text/csv;');
             header('Content-Disposition: attachment; filename="Liste-candidature.csv"');
 
-            $data = $StudentRepository->findAll();
+            $data = $studentRepository->findAll();
             ?>
 "note Repas";"note Environnement";" Commentaire";" Date";
 <?php
