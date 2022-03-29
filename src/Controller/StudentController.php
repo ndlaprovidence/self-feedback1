@@ -2,25 +2,26 @@
 
 namespace App\Controller;
 
-use App\Entity\ChartChoice;
-use App\Form\ChartChoiceType;
 use DateTime;
 use App\Entity\Student;
 use App\Form\StudentType;
+use App\Entity\ChartChoice;
+use App\Form\ChartChoiceType;
+use function PHPSTORM_META\type;
+use Doctrine\DBAL\Types\TextType;
 use Symfony\UX\Chartjs\Model\Chart;
+use App\Repository\QrcodeRepository;
 use App\Repository\StudentRepository;
+use Symfony\Component\Form\Event\SubmitEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Repository\QrcodeRepository;
-use Doctrine\DBAL\Types\TextType;
-use Symfony\Component\Form\Event\SubmitEvent;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+
+
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-
-
-use function PHPSTORM_META\type;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/student")
@@ -55,8 +56,6 @@ class StudentController extends AbstractController
         $datenoterepas3 = $studentRepository->getDateRepas3();
         $datenoterepas4 = $studentRepository->getDateRepas4();
         $datenoterepas5 = $studentRepository->getDateRepas5();
-        dump($datenoterepas1);
-        dump($datenoterepas2);
 
         if (isset($datenoterepas5[0]['note_date'])) {
             $labels[] = $datenoterepas5[0]['note_date'];
@@ -110,50 +109,50 @@ class StudentController extends AbstractController
             'datasets' => [
                 [
                     'label' => 'Note chaleur',
-                    'backgroundColor' => 'rgba(45,255,175, 0.5)',
-                    'borderColor' => 'rgb(45,175,255)',
-                    'pointBackgroundColor' => 'rgb(45,175,255)',
-                    'pointBorderColor' => 'rgb(45,175,255)',
+                    'backgroundColor' => 'rgba(242,129,35, 0.5)',
+                    'borderColor' => 'rgb(242,129,35)',
+                    'pointBackgroundColor' => 'rgb(242,129,35)',
+                    'pointBorderColor' => 'rgb(242,129,35)',
                     'data' => $data3,
                 ],
                 [
                     'label' => 'Note gout',
-                    'backgroundColor' => 'rgba(255,20,255, 0.5)',
-                    'borderColor' => 'rgb(255,175,45)',
-                    'pointBackgroundColor' => 'rgb(50,175,255)',
-                    'pointBorderColor' => 'rgb(50,175,255)',
+                    'backgroundColor' => 'rgba(45,170,225, 0.5)',
+                    'borderColor' => 'rgb(45,170,225)',
+                    'pointBackgroundColor' => 'rgb(45,170,225)',
+                    'pointBorderColor' => 'rgb(45,170,225)',
                     'data' => $data4,
                 ],
                 [
                     'label' => 'Note Quantité',
-                    'backgroundColor' => 'rgba(255,255,45, 0.5)',
-                    'borderColor' => 'rgb(255,175,45)',
-                    'pointBackgroundColor' => 'rgb(50,175,255)',
-                    'pointBorderColor' => 'rgb(50,175,255)',
+                    'backgroundColor' => 'rgba(202,46,85, 0.5)',
+                    'borderColor' => 'rgb(202,46,85)',
+                    'pointBackgroundColor' => 'rgb(202,46,85)',
+                    'pointBorderColor' => 'rgb(202,46,85)',
                     'data' => $data5,
                 ],
                 [
                     'label' => 'Note Acceuil',
-                    'backgroundColor' => 'rgba(255,20,20, 0.5)',
-                    'borderColor' => 'rgb(255,175,45)',
-                    'pointBackgroundColor' => 'rgb(50,175,255)',
-                    'pointBorderColor' => 'rgb(50,175,255)',
+                    'backgroundColor' => 'rgba(169,240,209, 0.5)',
+                    'borderColor' => 'rgb(169,240,209)',
+                    'pointBackgroundColor' => 'rgb(169,240,209)',
+                    'pointBorderColor' => 'rgb(169,240,209)',
                     'data' => $data6,
                 ],
                 [
                     'label' => 'Note diversité',
-                    'backgroundColor' => 'rgba(20,20,255, 0.5)',
-                    'borderColor' => 'rgb(255,175,45)',
-                    'pointBackgroundColor' => 'rgb(50,175,255)',
-                    'pointBorderColor' => 'rgb(50,175,255)',
+                    'backgroundColor' => 'rgba(153,194,77, 0.5)',
+                    'borderColor' => 'rgb(153,194,77)',
+                    'pointBackgroundColor' => 'rgb(153,194,77)',
+                    'pointBorderColor' => 'rgb(153,194,77)',
                     'data' => $data7,
                 ],
                 [
                     'label' => 'Note hygiène',
-                    'backgroundColor' => 'rgba(20,255,20, 0.5)',
-                    'borderColor' => 'rgb(255,175,45)',
-                    'pointBackgroundColor' => 'rgb(50,175,255)',
-                    'pointBorderColor' => 'rgb(50,175,255)',
+                    'backgroundColor' => 'rgba(29,78,137, 0.5)',
+                    'borderColor' => 'rgb(29,78,137)',
+                    'pointBackgroundColor' => 'rgb(29,78,137)',
+                    'pointBorderColor' => 'rgb(29,78,137)',
                     'data' => $data8,
                 ],
             ],
@@ -246,26 +245,59 @@ class StudentController extends AbstractController
             'titre' => 'Votre note à été enregisté !',
         ]);
     }
+
     /**
-     *  @Route("/", name="student_csvweek", methods={"GET"})
+     *  @Route("/csvweek", name="student_csvweek")
      */
-    function exportCsvWeek(StudentRepository $studentRepository): Response
+    function exportToCsv()
     {
-        $students = $studentRepository->findAll();
-        $csv = $this->get('knp_snappy.pdf')->getOutputFromHtml(
-            $this->renderView(
-                'student/csvweek.html.twig',
-                ['students' => $students]
-            )
-        );
-        $response = new Response();
-        $response->headers->set('Content-Type', 'application/pdf');
-        $response->headers->set('Content-Disposition', 'attachment;filename="notes_semaine.pdf"');
-        $response->setContent($csv);
+        dump(1);
+        $students = $this->getDoctrine()->getRepository(Student::class)->findAll();
+        dump(2);
+        $response = new StreamedResponse();
+        dump(3);
+
+        $response->setCallback(function () use ($students) {
+            $handle = fopen('php://output', 'r+');
+            fputcsv($handle, array('id', 'note_date', 'note_gout', 'note_quantite', 'note_acceuil', 'note_diversite', 'note_hygiene', 'note_total'));
+            foreach ($students as $student) {
+                fputcsv($handle, array($student->getId(), $student->getNoteDate(), $student->getNoteGout(), $student->getNoteQuantite(), $student->getNoteAcceuil(), $student->getNoteDiversite(), $student->getNoteHygiene(), $student->getNoteTotal()));
+            }
+            fclose($handle);
+        });
+        dump(4);
+
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
+        $response->headers->set('Content-Disposition', 'attachment; filename="notes.csv"');
+        dump(5);
+        $this->render('student/student_csvweek.html.twig');
         return $response;
     }
 
-    
+    /**
+     *  @Route("/csvweek2", name="student_csvweek2")
+     */
+    function exportToCsv2(StudentRepository $studentRepository)
+    {
+        dump(1);
+        $students = $studentRepository->findAll();
+        dump(2);
+
+        $data = "id;note_date;note_gout;note_quantite;note_acceuil;note_diversite;note_hygiene" . PHP_EOL;
+        foreach ($students as $student) {
+            $data = $data . $student->getId() . ";" . $student->getNoteDate()->format('d/m/y') . ";" . $student->getNoteGout() . ";" . $student->getNoteQuantite() . ";" . $student->getNoteAcceuil() . ";" . $student->getNoteDiversite() . ";" . $student->getNoteHygiene() . PHP_EOL;
+        }
+        dump($data);
+
+        return new Response($data, 
+            Response::HTTP_OK,
+            ['content-type' => 'text/csv', 
+        ]);
+    }
+
+
+
     /**
      * @Route("/{id}", name="student_show", methods={"GET"})
      */
