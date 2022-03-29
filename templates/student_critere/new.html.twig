@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New StudentCritere{% endblock %}
+
+{% block body %}
+    <h1>Create new StudentCritere</h1>
+
+    {{ include('student_critere/_form.html.twig') }}
+
+    <a href="{{ path('student_critere_index') }}">back to list</a>
+{% endblock %}

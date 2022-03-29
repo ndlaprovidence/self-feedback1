@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Critere index{% endblock %}
+
+{% block body %}
+    <h1>Critere index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for critere in criteres %}
+            <tr>
+                <td>{{ critere.id }}</td>
+                <td>{{ critere.libelle }}</td>
+                <td>
+                    <a href="{{ path('critere_show', {'id': critere.id}) }}">show</a>
+                    <a href="{{ path('critere_edit', {'id': critere.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('critere_new') }}">Create new</a>
+{% endblock %}

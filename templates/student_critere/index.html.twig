@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}StudentCritere index{% endblock %}
+
+{% block body %}
+    <h1>StudentCritere index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NoteChaleur</th>
+                <th>NoteGout</th>
+                <th>Notequantite</th>
+                <th>Noteacceuil</th>
+                <th>Notediversite</th>
+                <th>Notehygiene</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for student_critere in student_criteres %}
+            <tr>
+                <td>{{ student_critere.id }}</td>
+                <td>{{ student_critere.noteChaleur }}</td>
+                <td>{{ student_critere.noteGout }}</td>
+                <td>{{ student_critere.notequantite }}</td>
+                <td>{{ student_critere.noteacceuil }}</td>
+                <td>{{ student_critere.notediversite }}</td>
+                <td>{{ student_critere.notehygiene }}</td>
+                <td>
+                    <a href="{{ path('student_critere_show', {'id': student_critere.id}) }}">show</a>
+                    <a href="{{ path('student_critere_edit', {'id': student_critere.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('student_critere_new') }}">Create new</a>
+{% endblock %}
