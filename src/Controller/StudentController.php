@@ -6,13 +6,14 @@ use DateTime;
 use App\Entity\Student;
 use App\Form\StudentType;
 use Symfony\UX\Chartjs\Model\Chart;
+use App\Repository\QrcodeRepository;
 use App\Repository\StudentRepository;
+use App\Repository\StudentCritereRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Repository\QrcodeRepository;
 
 /**
  * @Route("/student")
@@ -22,11 +23,11 @@ class StudentController extends AbstractController
     /**
      * @Route("/", name="student_index", methods={"GET"})
      */
-    public function index(StudentRepository $StudentRepository, ChartBuilderInterface $chartBuilder): Response
+    public function index(StudentCritereRepository $StudentCritereRepository, ChartBuilderInterface $chartBuilder): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
-        $student = $StudentRepository->findAll();
+        $student = $StudentCritereRepository->findAll();
         
         $labels = [];
         $data = [];
@@ -37,11 +38,11 @@ class StudentController extends AbstractController
         $data6 = [];
         $data7 = [];
         $data8 = [];
-        $datenoterepas1 = $StudentRepository->getDateRepas1();
-        $datenoterepas2 = $StudentRepository->getDateRepas2();
-        $datenoterepas3 = $StudentRepository->getDateRepas3();
-        $datenoterepas4 = $StudentRepository->getDateRepas4();
-        $datenoterepas5 = $StudentRepository->getDateRepas5();
+        $datenoterepas1 = $StudentCritereRepository->getDateRepas1();
+        $datenoterepas2 = $StudentCritereRepository->getDateRepas2();
+        $datenoterepas3 = $StudentCritereRepository->getDateRepas3();
+        $datenoterepas4 = $StudentCritereRepository->getDateRepas4();
+        $datenoterepas5 = $StudentCritereRepository->getDateRepas5();
         dump($datenoterepas1);
         dump($datenoterepas2);
 
@@ -183,7 +184,7 @@ class StudentController extends AbstractController
         ]);
 
         return $this->render('student/index.html.twig', [
-            'students' => $StudentRepository->findAll(),
+            'students' => $StudentCritereRepository->findAll(),
             'chart' => $chart,
         ]);
     }
