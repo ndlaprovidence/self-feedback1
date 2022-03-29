@@ -204,7 +204,6 @@ class StudentController extends AbstractController
         $token = $qrcodeRepository->getTokenToday();
         $token2 = $_GET['token'];
         if ($token == $token2) {
-            $this->denyAccessUnlessGranted('ROLE_USER');
 
             $student = new Student();
             $student->setNoteDate(new DateTime());
