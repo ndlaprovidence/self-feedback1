@@ -109,7 +109,7 @@ class StudentController extends AbstractController
             'labels' => $labels,
             'datasets' => [
                 [
-                    'label' => 'Note chaleur',
+                    'label' => 'Note Chaleur',
                     'backgroundColor' => 'rgba(45,255,175, 0.5)',
                     'borderColor' => 'rgb(45,175,255)',
                     'pointBackgroundColor' => 'rgb(45,175,255)',
@@ -117,7 +117,7 @@ class StudentController extends AbstractController
                     'data' => $data3,
                 ],
                 [
-                    'label' => 'Note gout',
+                    'label' => 'Note Goût',
                     'backgroundColor' => 'rgba(255,20,255, 0.5)',
                     'borderColor' => 'rgb(255,175,45)',
                     'pointBackgroundColor' => 'rgb(50,175,255)',
@@ -141,7 +141,7 @@ class StudentController extends AbstractController
                     'data' => $data6,
                 ],
                 [
-                    'label' => 'Note diversité',
+                    'label' => 'Note Diversité',
                     'backgroundColor' => 'rgba(20,20,255, 0.5)',
                     'borderColor' => 'rgb(255,175,45)',
                     'pointBackgroundColor' => 'rgb(50,175,255)',
@@ -149,7 +149,7 @@ class StudentController extends AbstractController
                     'data' => $data7,
                 ],
                 [
-                    'label' => 'Note hygiène',
+                    'label' => 'Note Hygiène',
                     'backgroundColor' => 'rgba(20,255,20, 0.5)',
                     'borderColor' => 'rgb(255,175,45)',
                     'pointBackgroundColor' => 'rgb(50,175,255)',
@@ -244,7 +244,7 @@ class StudentController extends AbstractController
     {
 
         return $this->render('student/valid.html.twig', [
-            'titre' => 'Votre note à été enregisté !',
+            'titre' => 'Votre note à été enregistée !',
         ]);
     }
     /**

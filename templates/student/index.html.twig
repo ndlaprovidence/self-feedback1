@@ -11,7 +11,7 @@
 
         <nav class="leftNav" id="myTopnav">
             <div class="leftnav__date">
-                <a class="topnav__link" href="{{ path('export') }}" target="_blank">Rapports semaine courante <img src="../images/download.png" width="20px"></a>
+                <a class="topnav__link" href="{{ path('export') }}" target="_blank">Rapport semaine courante <img src="../images/download.png" width="20px"></a>
                 <a class="topnav__link" target="_blanc" href="{{ "../documentation/documentation.html" }}">Documentation <img src="../images/question.png" width="20px"></a>
             </div>
             <span class="leftnav__separateBar"></span>
@@ -19,7 +19,7 @@
                 <a class="topnav__link" href="#">| Rapports <img src="../images/report.png" width="20px"></a>
                 <a class="topnav__link" href="{{ path('classes_index') }}" >| Gestion des classes <img src="../images/classe.png" width="20px"></a>
                 <a class="topnav__link" href="{{ path('user_index') }}">| Gestion des utilisateurs <img src="../images/user.png" width="20px"></a>
-                <a class="topnav__link" href="{{ path('qrcode_generate') }}">| générer le QR-code <img src="../images/qrcode.png" width="20px"></a>
+                <a class="topnav__link" href="{{ path('qrcode_generate') }}">| Générer le QR-code <img src="../images/qrcode.png" width="20px"></a>
             </div>
         </nav>
 
@@ -65,7 +65,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="6">Aucune notes enregistrées</td>
+                    <td colspan="6">Aucune note enregistrée</td>
                 </tr>
             {% endfor %}
             </tbody>

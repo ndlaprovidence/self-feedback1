@@ -59,7 +59,7 @@ class ClassesController extends AbstractController
     {
         
         return $this->render('classes/valid.html.twig', [
-            'titre' => 'La classe a étais enregisté !',
+            'titre' => 'La classe a été enregistrée !',
         ]);
     }
 

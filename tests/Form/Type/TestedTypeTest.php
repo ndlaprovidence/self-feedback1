@@ -6,7 +6,7 @@ namespace App\Tests\Form\Type;
 class TestedTypeTest 
 {
 
-    $client = null;
+        $client = null;
 
     public __construct() {
         $this->client = static::createClient();        

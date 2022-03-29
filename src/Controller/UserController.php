@@ -73,7 +73,7 @@ class UserController extends AbstractController
     {
         
         return $this->render('user/valid.html.twig', [
-            'titre' => 'L utilisateur a étais enregisté !',
+            'titre' => "L'utilisateur a été enregisté !",
         ]);
     }
 
