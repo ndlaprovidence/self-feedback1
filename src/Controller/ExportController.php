@@ -44,31 +44,13 @@ class ExportController extends AbstractController
         function setGraphTemplate(\TCPDF $pdf, $product) { //Création du squelette du graphique.
             $dates=setDates($product); //Les dates, elles seront importées avec les notes.
 
-            $count=-1;
-            $count2=0;
-            $pdf->Arrow(30, 180, 266, 180, 3, 5, 15); //Date (X), 44 d'intervalle entre chaque barre.
-            $pdf->Arrow(30, 180, 30, 40, 3, 5, 15); //Note (Y), 25 d'intervalle entre chaque barre.
-            for($y = 155;$y >= 55;$y -=25) {
-                $pdf->Line(29, $y, 31, $y);
-                $pdf->Line(31, $y, 250, $y,array('color' => array(170)));
-            }
-            for($x = 60;$x <=250;$x+=44)
-            $pdf->Line($x,179,$x,181);
-            $pdf->SetFont('courier', '', 8);
-            for($i = 176;$i>=0;$i-=44) { //Mise en place de la date
-                $count++;
-                $pdf->Text(230.5-$i,181,date("d/m", strtotime($dates[$count])),false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-            }
-            for($i = 25;$i<150;$i+=25) { //Mise en place des chiffres de 1 à 5
-                $count2++;
-                $pdf->Text(25,178.25-$i,"$count2",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-            }
-            $pdf->AddPage('L');
             $pdf->SetLineStyle(array('color' => array(0)));
+            $pdf->SetFillColor(array(0));
             $j=0;
             $etiquettesRep = ['Goût','Quantité','Diversité'];
             $etiquettesEnv = ['Chaleur','Hygiène','Accueil'];
             $pdf->SetFont('helvetica', '', 11);
+            
             for($i=0; $i<3;$i++) {
             //for($i=30;$i<264;$i+=78) {
                 $x=35+$i*80;
@@ -113,7 +95,6 @@ class ExportController extends AbstractController
                         break;
                 }
             }
-            dump($notesCount);
             for($h=0;$h<=4;$h++) {
                 $notesArray[$h] = array_sum($notesCount[$h])/count($notesCount[$h]);
             }
@@ -123,67 +104,68 @@ class ExportController extends AbstractController
             $dates = setDates($request);
             $count = -1;
             $pdf->setPage(1);
-            $noteRep=avgNote($request, 'Repas'); //Moyenne des notes repas de chaque jour
-            $noteEnv=avgNote($request, 'Environnement'); //environnement
-            $coordRep = []; //Coordnnées de chaque note repas
-            $coordEnv = []; //...Et celles de l'environnement.
+            $typeNote = [];
+            array_push($typeNote,avgNote($request, 'Quantité')); //Moyenne des notes Quantité de chaque jour
+            array_push($typeNote,avgNote($request, 'Hygiène')); //environnement
+            array_push($typeNote,avgNote($request, 'Diversité'));
+            array_push($typeNote,avgNote($request, 'Chaleur'));
+            array_push($typeNote,avgNote($request, 'Gout'));
+            array_push($typeNote,avgNote($request, 'Accueil'));
             $styleRep = array('width' => 1, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(255, 0, 0)); //Style Barre repas
             $styleEnv = array('width' => 1, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 255, 190)); //Style Barre environnement
-            for($x = 60;$x<212;$x+=44) {
-                $count++;
-                $y = coordTranslator($noteRep[$count]); //Appelle le traducteur.
-                $y2 = coordTranslator($noteEnv[$count]);
-                array_push($coordRep,$x, $y); //Pousse la note dans l'array de coordonnées..
-                array_push($coordEnv,$x, $y2);
+            $colorFill = array(0 => array(0, 255,255), 1 => array(255,0,0),2 => array(180,0,180),3 => array(0,255,0), 4 => array(0,0,255));
+            dump($typeNote);
+            for($j=0;$j<3;$j++) {
+                $x=45+$j*80;
+                for($i=0;$i<=4;$i++) {
+                    $x=45+$j*80;
+                    $decalage=$x+$i*10;
+                    $color = array();
+                    $pdf->Rect($decalage,96-coordTranslator($typeNote[$j][$i]) , 10, coordTranslator($typeNote[$j][$i]),'F','',$colorFill[$i]);
+                    $pdf->Rect($decalage,180-coordTranslator($typeNote[$j+2][$i]) , 10, coordTranslator($typeNote[$j+2][$i]),'F','',$colorFill[$i]);
+                }
             }
-            array_push($coordRep,$x, coordTranslator($noteRep[$count+1])); //Poussées finales, nécessaire pour pas que tout bugue.
-            array_push($coordEnv,$x, coordTranslator($noteEnv[$count+1]));
-            $pdf->SetLineStyle($styleRep); //
-            $pdf->PolyLine($coordRep); //Et voilà le beau bébé ! :D
-            $pdf->SetLineStyle($styleEnv);
-            $pdf->PolyLine($coordEnv);
-            $pdf->setPage(2);
-            $pdf->AddPage('L');
+            // for($x = 60;$x<212;$x+=44) {
+            //     $count++;
+            //     $y = coordTranslator($noteRep[$count]); //Appelle le traducteur.
+            //     $y2 = coordTranslator($noteEnv[$count]);
+            //     array_push($coordRep,$x, $y); //Pousse la note dans l'array de coordonnées..
+            //     array_push($coordEnv,$x, $y2);
+            // }
+            // array_push($coordRep,$x, coordTranslator($noteRep[$count+1])); //Poussées finales, nécessaire pour pas que tout bugue.
+            // array_push($coordEnv,$x, coordTranslator($noteEnv[$count+1]));
+            // $pdf->SetLineStyle($styleRep); //
+            // $pdf->PolyLine($coordRep); //Et voilà le beau bébé ! :D
+            // $pdf->SetLineStyle($styleEnv);
+            // $pdf->PolyLine($coordEnv);
         }
-        function coordTranslator(float $note, $graphPlace="center") {//Traduit les notes en coordonnée Y pour le graphique.
-            //Le 0 c'est 180, le 100 c'est 40 (140 d'écart)
-            return 155-(100*($note-1)*25/100);
+        function coordTranslator(float $note) {//Traduit les notes en coordonnée Y pour le graphique.
+            return 46-(9.2*($note-1));
         }
         function getData(\TCPDF $pdf, $request, bool $refuse = false) { //ça a commencé en getdata, et ça finit en postdata lmao
+            $pdf->setPage(1);
+            $pdf->AddPage('L');
             $bidule = 0;
             $incrementer = 0;
             $dates=setDates($request); //Les dates, elles seront importées avec les notes.
             array_push($dates);
             //J'ai besoin d'un moyen de revenir sue cette ligne en despi, alors je vais dire bun.
-            if($refuse==false){ //Refuse est ici pour des raisons de test, il sera retiré une fois que le debugging sera fini.
-                $pdf->SetFont('helvetica', 'B', 11);
-                $pdf->Text(25,50, "Id",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                $pdf->Text(50,50, "Note Repas",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                $pdf->Text(80,50, "Note Env.",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                $pdf->Text(110,50, "Note Chaleur",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                $pdf->Text(140,50, "Note Gout",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                $pdf->Text(170,50, "Date",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                //$pdf->Text(170,50, "Commentaire",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                //Note = Je prévois de mettre une boite de 66 W majuscules de long après l'id pour afficher un commentaire.
-                $pdf->SetFont('helvetica', '', 11);
-                foreach($request as $ligne) {
-                    $incrementer++;
-                    $bidule+=5;
-                    $pdf->Text(25,50+$bidule, $ligne['id'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                    $pdf->Text(50,50+$bidule, $ligne['Repas'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                    $pdf->Text(80,50+$bidule, $ligne['Environnement'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                    $pdf->Text(110,50+$bidule, $ligne['Chaleur'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                    $pdf->Text(140,50+$bidule, $ligne['Gout'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                    $pdf->Text(170,50+$bidule, date("d/m", strtotime($ligne['Date'])),false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                    //$pdf->Text(170,50+$bidule, $ligne['Commentaire'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
-                    
-                    if($incrementer%25==0) {
-                        $pdf->AddPage('L');
-                        $incrementer = 0;
-                        $bidule = 0;
-                    }
+            $pdf->SetFont('helvetica', 'B', 11);
+            $pdf->Text(25,50, "Id",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+            $pdf->Text(50,50, "Date",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+            $pdf->Text(65,50, "Commentaire",false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+            $pdf->SetFont('helvetica', '', 11);
+            foreach($request as $ligne) {
+                $incrementer++;
+                $bidule+=5;
+                $pdf->Text(25,50+$bidule, $ligne['id'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                $pdf->Text(50,50+$bidule, date("d/m", strtotime($ligne['Date'])),false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                $pdf->Text(65,50+$bidule, $ligne['Commentaire'],false, false, true, 0, 0, '', false, '', 0, false, 'T', 'M', $rtloff=true);
+                if($incrementer%25==0) {
+                    $pdf->AddPage('L');
+                    $incrementer = 0;
+                    $bidule = 0;
                 }
-                
             }
         }
 
@@ -240,6 +222,7 @@ class ExportController extends AbstractController
 // ---------------------------------------------------------
         ob_end_clean(); //Nécessaire pour que le pdf se fasse bien.
         //Close and output PDF document
+        //throw new Exception; //Pour voir le contenu d'un dump
         $pdf->Output('export.pdf', 'I');
         
         return $this->redirectToRoute('student_index', [], Response::HTTP_SEE_OTHER);
