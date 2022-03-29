@@ -41,8 +41,12 @@
 {% endblock %}
 {% block body %}
     <h1>Classes</h1>
+<<<<<<< HEAD
+    <table class="table">
+=======
 
     <table style="border: solid #424242 0px !important; width: 100%;">
+>>>>>>> 18243a4df4af4217eb363c9fa0743bce94aa8d7c
         <tbody>
             <tr class="table_title" id="table_title">
             </tr>
@@ -51,10 +55,29 @@
             </tr>
         </tbody>
     </table>
+<<<<<<< HEAD
+        <table class="table">
+            <thead>
+                <tr class="table_title" id="table_title">
+                    <th class="table_id">Id</th>
+                    <th>Classe_libelle</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>{{ class.id }}</th>
+                    <th>{{ class.classeLibelle }}</th>
+                </tr>
+            </tbody>
+        </table>
+    <a href="{{ path('classes_index') }}" >back to list</a>
+    <a href="{{ path('classes_edit', {'id': class.id}) }}" >edit</a>
+=======
 
     <a href="{{ path('classes_index') }}" class="btn5" >back to list</a>
 
     <a href="{{ path('classes_edit', {'id': class.id}) }}" class="btn5" >edit</a>
 
+>>>>>>> 18243a4df4af4217eb363c9fa0743bce94aa8d7c
     {{ include('classes/_delete_form.html.twig') }}
 {% endblock %}

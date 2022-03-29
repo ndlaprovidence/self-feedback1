@@ -1,40 +1,13 @@
-{% extends 'base-user.html.twig' %}
+{% extends 'base-edit-user.html.twig' %}
 
 
 {% block stylesheets %}
    <link rel="stylesheet" href="..css/style.css">
    <link rel="stylesheet" href="..css/dashboard.css">
    <link rel="stylesheet" href="..css/table.css">
-   <style>
-   
-    table {
-        border: solid #424242 0px !important;
-        width: 100%;
-    }
-    
-    tr {
-        background-color: #2dabe10c;
-    }
-    
-    tr:hover {
-        background-color: #2dabe136;
-    }
-    
-    tr:active {
-        background-color: #2dabe150;
-    }
-
-    .table_title {
-        background-color: #b8e6fa;
-        position: sticky;
-        top: 63px;
-    }
-    
-   </style>
 {% endblock %}
 
 {% block title %}User{% endblock %}
-
 {% block body %}
     <h1>User</h1>
 
@@ -42,26 +15,22 @@
         <tbody>
             <tr class="table_title" id="table_title">
                 <th class="table_id">Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
                 <th>username</th>
-                <td>{{ user.username }}</td>
-            </tr>
-            <tr>
                 <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <th>Password</th>
             </tr>
             <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
+                <th>{{ user.id }}</th>
+                <th>{{ user.username }}</th>
+                <th>{{ user.roles ? user.roles|json_encode : '' }}</th>
+                <th>{{ user.password }}</th>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('user_index') }}">back to list</a>
+    <a href="{{ path('user_index') }}" class="back_tolist">back to list</a>
 
-    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+    <a href="{{ path('user_edit', {'id': user.id}) }}" >edit</a>
 
     {{ include('user/_delete_form.html.twig') }}
 {% endblock %}

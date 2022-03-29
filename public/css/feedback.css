@@ -69,7 +69,12 @@ label {
 .form-check-label:active {
     color: #2DAAE1;
 }
-
+#student_note_repas_0:hover{
+    color: #2DAAE1;
+}
+#student_note_repas_0:active{
+    color: #2DAAE1;
+}
  .rating__star-off {
     position: relative;
     fill: #2c2c2c;
@@ -112,3 +117,18 @@ label {
     cursor: pointer;
     border-radius: 15px;
     }
+    .rating__star-off {
+        position: relative;
+        fill: #2c2c2c;
+     }
+     .rating__star-off:hover {
+        opacity: 1;
+        cursor: pointer;
+        background-color: #2DAAE1;
+        fill:#2DAAE1;
+     }
+     .rating__star-on {
+        opacity: 1;
+        background-color: #2DAAE1;
+        fill:#2DAAE1;
+     }

@@ -40,8 +40,12 @@
         "symfony/yaml": "4.4.*",
         "symfonycasts/verify-email-bundle": "^1.6",
         "twig/extra-bundle": "^2.12|^3.0",
+<<<<<<< HEAD
+        "twig/twig": "^3.3"
+=======
         "twig/twig": "^2.12|^3.0",
         "whiteoctober/tcpdf-bundle": "^1.1"
+>>>>>>> 18243a4df4af4217eb363c9fa0743bce94aa8d7c
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.4",

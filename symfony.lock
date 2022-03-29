@@ -622,6 +622,9 @@
     "symfonycasts/verify-email-bundle": {
         "version": "v1.6.0"
     },
+    "tecnickcom/tcpdf": {
+        "version": "6.4.4"
+    },
     "theseer/tokenizer": {
         "version": "1.2.1"
     },
@@ -633,5 +636,8 @@
     },
     "webmozart/assert": {
         "version": "1.10.0"
+    },
+    "whiteoctober/tcpdf-bundle": {
+        "version": "1.1.2"
     }
 }
