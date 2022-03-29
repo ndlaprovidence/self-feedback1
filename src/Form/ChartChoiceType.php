@@ -19,6 +19,9 @@ class ChartChoiceType extends AbstractType
             'choices' => [
                 "Barres" => "bar",
                 'Lignes'=> "line",
+                'Donut' => "doughnut",
+                'Polar' => "polarArea",
+                'Radar' => "radar",
             ],
             'expanded' => true,
             'multiple' => false,
