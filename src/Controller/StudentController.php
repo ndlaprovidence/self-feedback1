@@ -18,8 +18,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-
-
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -249,54 +247,18 @@ class StudentController extends AbstractController
     /**
      *  @Route("/csvweek", name="student_csvweek")
      */
-    function exportToCsv()
+    function exportToCsv(StudentRepository $studentRepository)
     {
-        dump(1);
-        $students = $this->getDoctrine()->getRepository(Student::class)->findAll();
-        dump(2);
-        $response = new StreamedResponse();
-        dump(3);
-
-        $response->setCallback(function () use ($students) {
-            $handle = fopen('php://output', 'r+');
-            fputcsv($handle, array('id', 'note_date', 'note_gout', 'note_quantite', 'note_acceuil', 'note_diversite', 'note_hygiene', 'note_total'));
-            foreach ($students as $student) {
-                fputcsv($handle, array($student->getId(), $student->getNoteDate(), $student->getNoteGout(), $student->getNoteQuantite(), $student->getNoteAcceuil(), $student->getNoteDiversite(), $student->getNoteHygiene(), $student->getNoteTotal()));
-            }
-            fclose($handle);
-        });
-        dump(4);
-
-        $response->setStatusCode(200);
-        $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
-        $response->headers->set('Content-Disposition', 'attachment; filename="notes.csv"');
-        dump(5);
-        $this->render('student/student_csvweek.html.twig');
-        return $response;
-    }
-
-    /**
-     *  @Route("/csvweek2", name="student_csvweek2")
-     */
-    function exportToCsv2(StudentRepository $studentRepository)
-    {
-        dump(1);
         $students = $studentRepository->findAll();
-        dump(2);
-
         $data = "id;note_date;note_gout;note_quantite;note_acceuil;note_diversite;note_hygiene" . PHP_EOL;
         foreach ($students as $student) {
             $data = $data . $student->getId() . ";" . $student->getNoteDate()->format('d/m/y') . ";" . $student->getNoteGout() . ";" . $student->getNoteQuantite() . ";" . $student->getNoteAcceuil() . ";" . $student->getNoteDiversite() . ";" . $student->getNoteHygiene() . PHP_EOL;
         }
-        dump($data);
-
         return new Response($data, 
             Response::HTTP_OK,
             ['content-type' => 'text/csv', 
         ]);
     }
-
-
 
     /**
      * @Route("/{id}", name="student_show", methods={"GET"})
