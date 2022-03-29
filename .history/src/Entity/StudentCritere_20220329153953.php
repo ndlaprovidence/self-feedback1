@@ -23,13 +23,13 @@ class StudentCritere
     private $noteChaleur;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Student::class)
+     * @ORM\ManyToOne(targetEntity=student::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $idStudent;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Critere::class)
+     * @ORM\ManyToOne(targetEntity=critere::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $idCritere;
@@ -88,12 +88,12 @@ class StudentCritere
         return $this;
     }
 
-    public function getIdCritere(): ?Critere
+    public function getIdCritere(): ?critere
     {
         return $this->idCritere;
     }
 
-    public function setIdCritere(?Critere $idCritere): self
+    public function setIdCritere(?critere $idCritere): self
     {
         $this->idCritere = $idCritere;
 

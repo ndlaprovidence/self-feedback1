@@ -2,8 +2,6 @@
 
 namespace App\Repository;
 
-use DateTime;
-use DateInterval;
 use App\Entity\StudentCritere;
 use App\Repository\CritereRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -22,10 +20,8 @@ class StudentCritereRepository extends ServiceEntityRepository
         parent::__construct($registry, StudentCritere::class);
     }
 
- /**
- *  @require  //TODO : REFAIRE CE REQUIRE
- */
- public function setCritereRep(CritereRepository $critereRepository)
+ 
+    public function setCritereRep(CritereRepository $critereRepository)
     {
         $this->critereRepository=$critereRepository;
     }
@@ -36,14 +32,14 @@ class StudentCritereRepository extends ServiceEntityRepository
         $madate = new DateTime(date("Y-m-d"));
         $strSQL = "" ;
         $this->critereRepository->findAll();
-        dump($this->critereRepository->findAll());
+        dump($criteres);
         //'SELECT AVG(note_repas), AVG(note_valeur_environnement), AVG(note_chaleur), AVG(note_gout), AVG(notequantite), AVG(noteacceuil), AVG(notediversite), AVG(notehygiene), note_date FROM student WHERE note_date = "'.$madate->format("Y-m-d").'";'
     }
 
     public function getDateRepas1(): ?array
     {
         
-        $sql = $this->getLesCriteresSQL();
+        $sql = $this->getLesCriteresSQL($CritereRepository);
         $query = $conn->executeQuery($sql);
         $result = $query->fetchAll();
         return $result;

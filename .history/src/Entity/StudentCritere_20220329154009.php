@@ -23,13 +23,13 @@ class StudentCritere
     private $noteChaleur;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Student::class)
+     * @ORM\ManyToOne(targetEntity=student::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $idStudent;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Critere::class)
+     * @ORM\ManyToOne(targetEntity=critere::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $idCritere;

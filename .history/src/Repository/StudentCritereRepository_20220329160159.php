@@ -23,7 +23,7 @@ class StudentCritereRepository extends ServiceEntityRepository
     }
 
  /**
- *  @require  //TODO : REFAIRE CE REQUIRE
+ *  @require
  */
  public function setCritereRep(CritereRepository $critereRepository)
     {
@@ -35,7 +35,8 @@ class StudentCritereRepository extends ServiceEntityRepository
         $conn = $this->getEntityManager()->getConnection();
         $madate = new DateTime(date("Y-m-d"));
         $strSQL = "" ;
-        $this->critereRepository->findAll();
+        $repos=$this->critereRepository;
+        $repos->findAll();
         dump($this->critereRepository->findAll());
         //'SELECT AVG(note_repas), AVG(note_valeur_environnement), AVG(note_chaleur), AVG(note_gout), AVG(notequantite), AVG(noteacceuil), AVG(notediversite), AVG(notehygiene), note_date FROM student WHERE note_date = "'.$madate->format("Y-m-d").'";'
     }

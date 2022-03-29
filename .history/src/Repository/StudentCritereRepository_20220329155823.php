@@ -23,7 +23,7 @@ class StudentCritereRepository extends ServiceEntityRepository
     }
 
  /**
- *  @require  //TODO : REFAIRE CE REQUIRE
+ *  @require
  */
  public function setCritereRep(CritereRepository $critereRepository)
     {

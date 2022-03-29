@@ -1,49 +1,42 @@
 <?php
 
 namespace App\Repository;
-
 use DateTime;
 use DateInterval;
-use App\Entity\StudentCritere;
-use App\Repository\CritereRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Student;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method StudentCritere|null find($id, $lockMode = null, $lockVersion = null)
- * @method StudentCritere|null findOneBy(array $criteria, array $orderBy = null)
- * @method StudentCritere[]    findAll()
- * @method StudentCritere[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Student|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Student|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Student[]    findAll()
+ * @method Student[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class StudentCritereRepository extends ServiceEntityRepository
+class StudentRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, StudentCritere::class);
+        parent::__construct($registry, Student::class);
     }
-
- /**
- *  @require  //TODO : REFAIRE CE REQUIRE
- */
- public function setCritereRep(CritereRepository $critereRepository)
+    public function getDateRepas(): ?array
     {
-        $this->critereRepository=$critereRepository;
+        $conn = $this->getEntityManager()->getConnection();
+        $madate = date("Y-m-d");
+        $madate2 = date("d")-7;
+        $madate3 = date("Y-m")."-".$madate2;
+        //dump($madate3." ".$madate);
+        $sql = 'SELECT note_repas, note_valeur_environnement, note_date FROM student WHERE note_date <= "'.$madate.'" AND note_date >= "'.$madate3.'";';
+        $query = $conn->executeQuery($sql);
+        $result = $query->fetchAll();
+        //dump($result);
+        return $result;
     }
- 
-    public function getLesCriteresSQL()
+    public function getDateRepas1(): ?array
     {
         $conn = $this->getEntityManager()->getConnection();
         $madate = new DateTime(date("Y-m-d"));
-        $strSQL = "" ;
-        $this->critereRepository->findAll();
-        dump($this->critereRepository->findAll());
-        //'SELECT AVG(note_repas), AVG(note_valeur_environnement), AVG(note_chaleur), AVG(note_gout), AVG(notequantite), AVG(noteacceuil), AVG(notediversite), AVG(notehygiene), note_date FROM student WHERE note_date = "'.$madate->format("Y-m-d").'";'
-    }
-
-    public function getDateRepas1(): ?array
-    {
-        
-        $sql = $this->getLesCriteresSQL();
+        $sql = 'SELECT AVG(note_repas), AVG(note_valeur_environnement), AVG(note_chaleur), AVG(note_gout), AVG(notequantite), AVG(noteacceuil), AVG(notediversite), AVG(notehygiene), note_date FROM student WHERE note_date = "'.$madate->format("Y-m-d").'";';
         $query = $conn->executeQuery($sql);
         $result = $query->fetchAll();
         return $result;
@@ -89,6 +82,19 @@ class StudentCritereRepository extends ServiceEntityRepository
         $madate->sub(new DateInterval('P4D'));
         //dump($madate3." ".$madate);
         $sql = 'SELECT AVG(note_repas), AVG(note_valeur_environnement), AVG(note_chaleur), AVG(note_gout), AVG(notequantite), AVG(noteacceuil), AVG(notediversite), AVG(notehygiene), note_date FROM student WHERE note_date = "'.$madate->format("Y-m-d").'";';
+        $query = $conn->executeQuery($sql);
+        $result = $query->fetchAll();
+        //dump($result);
+        return $result;
+    }
+    public function getDateEnv(): ?array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $madate = date("Y-m-d");
+        $madate2 = date("d")-7;
+        $madate3 = date("Y-m")."-".$madate2;
+        //dump($madate3." ".$madate);
+        $sql = 'SELECT note_valeur_environnement, note_date FROM student WHERE note_date <= "'.$madate.'" AND note_date >= "'.$madate3.'";';
         $query = $conn->executeQuery($sql);
         $result = $query->fetchAll();
         //dump($result);

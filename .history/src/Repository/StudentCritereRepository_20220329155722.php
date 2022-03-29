@@ -2,8 +2,6 @@
 
 namespace App\Repository;
 
-use DateTime;
-use DateInterval;
 use App\Entity\StudentCritere;
 use App\Repository\CritereRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -23,7 +21,7 @@ class StudentCritereRepository extends ServiceEntityRepository
     }
 
  /**
- *  @require  //TODO : REFAIRE CE REQUIRE
+ *  @require
  */
  public function setCritereRep(CritereRepository $critereRepository)
     {
@@ -43,7 +41,7 @@ class StudentCritereRepository extends ServiceEntityRepository
     public function getDateRepas1(): ?array
     {
         
-        $sql = $this->getLesCriteresSQL();
+        $sql = $this->getLesCriteresSQL($CritereRepository);
         $query = $conn->executeQuery($sql);
         $result = $query->fetchAll();
         return $result;
