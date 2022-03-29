@@ -168,7 +168,7 @@ class StudentController extends AbstractController
                 ]]
             ]
         ]);
-        
+
         return $this->render('student/index.html.twig', [
             'students' => $studentRepository->findAll(),
             'chart' => $chart,
@@ -188,7 +188,7 @@ class StudentController extends AbstractController
 
         if ($form->isSubmitted()) {
             $chartChoice = $_POST["chart_choice"];
-            return $this->redirect("/student/?type=".$chartChoice['type']);
+            return $this->redirect("/student/?type=" . $chartChoice['type']);
         } else {
             return $this->render('student/selectChartType.html.twig', [
                 'form' => $form->createView(),
@@ -250,80 +250,72 @@ class StudentController extends AbstractController
     /**
      *  @Route("/", name="student_csvweek", methods={"GET"})
      */
-    function csvWeek(StudentRepository $studentRepository)
+    function exportCsvWeek(StudentRepository $studentRepository): Response
     {
-        // $labels = [];
-        // $data = [];
-        // $data2 = [];
-        // $datenoterepas = $studentRepository->getDateRepas();
-        // for ($i = 0; $i < count($datenoterepas);$i++){
-        // $labels[] = $datenoterepas[0]['note_date'];
-        // $data[] = $datenoterepas[0]['note_repas'];
-        // $data2[] = $datenoterepas[0]['note_valeur_environnement'];
-        // }
-?><?php
-            header('Content-Type: text/csv;');
-            header('Content-Disposition: attachment; filename="Liste-candidature.csv"');
+        $students = $studentRepository->findAll();
+        $csv = $this->get('knp_snappy.pdf')->getOutputFromHtml(
+            $this->renderView(
+                'student/csvweek.html.twig',
+                ['students' => $students]
+            )
+        );
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/pdf');
+        $response->headers->set('Content-Disposition', 'attachment;filename="notes_semaine.pdf"');
+        $response->setContent($csv);
+        return $response;
+    }
 
-            $data = $studentRepository->findAll();
-            ?>
-"note Repas";"note Environnement";" Commentaire";" Date";
-<?php
-        foreach ($data as $d) {
-            echo '"' . $d->noteRepas . '";"' . $d->noteValeurEnvironnement . '";"' . $d->noteCommentaire . '";"' . $d->noteDate . '";' . ";\n";
-        }
-?><?php
-        }
+    
+    /**
+     * @Route("/{id}", name="student_show", methods={"GET"})
+     */
+    public function show(Student $student): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
-        /**
-         * @Route("/{id}", name="student_show", methods={"GET"})
-         */
-        public function show(Student $student): Response
-        {
-            $this->denyAccessUnlessGranted('ROLE_USER');
+        return $this->render('student/show.html.twig', [
+            'student' => $student,
+        ]);
+    }
 
-            return $this->render('student/show.html.twig', [
-                'student' => $student,
-            ]);
-        }
+    /**
+     * @Route("/{id}/edit", name="student_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, Student $student): Response
+    {
 
-        /**
-         * @Route("/{id}/edit", name="student_edit", methods={"GET","POST"})
-         */
-        public function edit(Request $request, Student $student): Response
-        {
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-            $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+        $form = $this->createForm(StudentType::class, $student);
+        $form->handleRequest($request);
 
-            $form = $this->createForm(StudentType::class, $student);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                $this->getDoctrine()->getManager()->flush();
-
-                return $this->redirectToRoute('student_index', [], Response::HTTP_SEE_OTHER);
-            }
-
-            return $this->render('student/edit.html.twig', [
-                'student' => $student,
-                'form' => $form->createView(),
-            ]);
-        }
-
-        /**
-         * @Route("/{id}", name="student_delete", methods={"POST"})
-         */
-        public function delete(Request $request, Student $student): Response
-        {
-
-            $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
-
-            if ($this->isCsrfTokenValid('delete' . $student->getId(), $request->request->get('_token'))) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->remove($student);
-                $entityManager->flush();
-            }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('student_index', [], Response::HTTP_SEE_OTHER);
         }
+
+        return $this->render('student/edit.html.twig', [
+            'student' => $student,
+            'form' => $form->createView(),
+        ]);
     }
+
+    /**
+     * @Route("/{id}", name="student_delete", methods={"POST"})
+     */
+    public function delete(Request $request, Student $student): Response
+    {
+
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+
+        if ($this->isCsrfTokenValid('delete' . $student->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($student);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('student_index', [], Response::HTTP_SEE_OTHER);
+    }
+}
