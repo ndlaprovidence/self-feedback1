@@ -57,9 +57,18 @@ class ExportController extends AbstractController
                 $bar=$x+70;
                 $pdf->Arrow($x, 96, $x, 40, 3, 5, 15); //On refait des ajustements.
                 $pdf->Arrow($x,96,$bar,96,3, 5, 15);
+                $pdf->SetLineStyle(array('color' => array(170)));
+                for($j=1;$j<=5;$j++) {
+                    $intervale = $j*9.2;
+                    $pdf->Line($x-1, 96-$intervale, $x+63, 96-$intervale);
+                    $pdf->Line($x-1, 180-$intervale, $x+63, 180-$intervale);
+                }
+                $pdf->SetLineStyle(array('color' => array(0)));
                 $pdf->Text($x,96,$etiquettesRep[$i]);
                 $pdf->Arrow($x, 180, $x, 119, 3, 5, 15); //On refait des ajustements.
                 $pdf->Arrow($x,180,$bar,180,3, 5, 15);
+                $pdf->SetLineStyle(array('color' => array(170)));
+                $pdf->SetLineStyle(array('color' => array(0)));
                 $pdf->Text($x,180,$etiquettesEnv[$i]);
             }
             $pdf->SetFont('helvetica', 'B', 20);
@@ -96,7 +105,12 @@ class ExportController extends AbstractController
                 }
             }
             for($h=0;$h<=4;$h++) {
-                $notesArray[$h] = array_sum($notesCount[$h])/count($notesCount[$h]);
+                if(count($notesCount[$h]) == 0) {
+                    $notesArray[$h] = 0;
+                }
+                else {
+                    $notesArray[$h] = array_sum($notesCount[$h])/count($notesCount[$h]);
+                }
             }
             return $notesArray;
         }
@@ -121,8 +135,8 @@ class ExportController extends AbstractController
                     $x=45+$j*80;
                     $decalage=$x+$i*10;
                     $color = array();
-                    $pdf->Rect($decalage,96-coordTranslator($typeNote[$j][$i]) , 10, coordTranslator($typeNote[$j][$i]),'F','',$colorFill[$i]);
-                    $pdf->Rect($decalage,180-coordTranslator($typeNote[$j+2][$i]) , 10, coordTranslator($typeNote[$j+2][$i]),'F','',$colorFill[$i]);
+                    $pdf->Rect($decalage,96 , 10, -coordTranslator($typeNote[$j][$i]),'F','',$colorFill[$i]);
+                    $pdf->Rect($decalage,180 , 10, -coordTranslator($typeNote[$j+2][$i]),'F','',$colorFill[$i]);
                 }
             }
             // for($x = 60;$x<212;$x+=44) {
@@ -140,7 +154,7 @@ class ExportController extends AbstractController
             // $pdf->PolyLine($coordEnv);
         }
         function coordTranslator(float $note) {//Traduit les notes en coordonnée Y pour le graphique.
-            return 46-(9.2*($note-1));
+            return (9.2*($note));
         }
         function getData(\TCPDF $pdf, $request, bool $refuse = false) { //ça a commencé en getdata, et ça finit en postdata lmao
             $pdf->setPage(1);
