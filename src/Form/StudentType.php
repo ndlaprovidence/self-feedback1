@@ -19,11 +19,11 @@ class StudentType extends AbstractType
     {
         $builder->add('note_gout', ChoiceType::class, [
             'choices' => [
-                " " => 1,
-                "  " => 2,
-                "  " => 3,
-                "   " => 4,
-                "    " => 5,
+                "   " => 1,
+                "   " => 2,
+                "   " => 3,
+                "   " => 4,
+                "   " => 5,
             ],
             'choice_attr' => [
                 '1' => ['id' => '1'],

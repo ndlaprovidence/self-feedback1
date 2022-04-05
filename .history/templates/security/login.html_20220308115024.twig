@@ -14,14 +14,14 @@
 
         {% if app.user %}
             <div class="mb-3">
-                You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
             </div>
         {% endif %}
 
         <h1 class="login_title"> Connectez vous </h1>
-        <label for="inputUsername" class="login_label">Nom d'utilisateur</label>
+        <label for="inputUsername" class="login_label">Username</label>
         <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="login_inputs" autocomplete="username" required autofocus placeholder="email">
-        <label for="inputPassword" class="login_label">Mot de passe</label>
+        <label for="inputPassword" class="login_label">Password</label>
         <input type="password" name="password" id="inputPassword" class="login_inputs" autocomplete="current-password" required placeholder="Mot de passe">
 
         <input type="hidden" name="_csrf_token"
@@ -40,7 +40,7 @@
         
 
         <button class="login_inputs" id="btn5" type="submit">
-            Se connecter
+            Sign in
         </button>
 
     </form>

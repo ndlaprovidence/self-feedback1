@@ -32,28 +32,23 @@ class ChartjsController extends AbstractController
 
         if (isset($datenoterepas1[0]['note_date'])){
          $labels[] = $datenoterepas1[0]['note_date'];
-        $data[] = $datenoterepas1[0]['AVG(note_repas)'];
-        $data2[] = $datenoterepas1[0]['AVG(note_valeur_environnement)'];
+        $data[] = $datenoterepas1[0]["AVG(note_chaleur)"];
     }
         if (isset($datenoterepas2[0]['note_date'])){
         $labels[] = $datenoterepas2[0]['note_date'];
-        $data[] = $datenoterepas2[0]['AVG(note_repas)'];
-        $data2[] = $datenoterepas2[0]['AVG(note_valeur_environnement)'];
+        $data[] = $datenoterepas2[0]["AVG(note_chaleur)"];
     }
         if(isset($datenoterepas3[0]['note_date'])){
         $labels[] = $datenoterepas3[0]['note_date'];
-        $data[] = $datenoterepas3[0]['AVG(note_repas)'];
-        $data2[] = $datenoterepas3[0]['AVG(note_valeur_environnement)'];
+        $data[] = $datenoterepas3[0]["AVG(note_chaleur)"];
     }
         if(isset($datenoterepas4[0]['note_date'])){
         $labels[] = $datenoterepas4[0]['note_date'];
-        $data[] = $datenoterepas4[0]['AVG(note_repas)'];
-        $data2[] = $datenoterepas4[0]['AVG(note_valeur_environnement)'];
+        $data[] = $datenoterepas4[0]["AVG(note_chaleur)"];
     }
         if(isset($datenoterepas5[0]['note_date'])){
         $labels[] = $datenoterepas5[0]['note_date'];
-        $data[] = $datenoterepas5[0]['AVG(note_repas)'];
-        $data2[] = $datenoterepas5[0]['AVG(note_valeur_environnement)'];
+        $data[] = $datenoterepas5[0]["AVG(note_chaleur)"];
     }
         //dump($datenoteenvironnement);
        /* foreach ($student as $Students) {
@@ -63,7 +58,7 @@ class ChartjsController extends AbstractController
             $data2[] = $Students->getNoteValeurEnvironnement();
         }*/
 
-        $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
+        $chart = $chartBuilder->createChart("polarArea");
         $chart->setData([
             'labels' => $labels,
             'datasets' => [
@@ -74,14 +69,6 @@ class ChartjsController extends AbstractController
                     'pointBackgroundColor' => 'rgb(45,170,255)',
                     'pointBorderColor' => 'rgb(45,170,255)',
                     'data' => $data,
-                ],
-                [
-                    'label' => 'Note Environement',
-                    'backgroundColor' => 'rgba(255,255,255, 0.5)',
-                    'borderColor' => 'rgb(45,170,255)',
-                    'pointBackgroundColor' => 'rgb(45,170,255)',
-                    'pointBorderColor' => 'rgb(45,170,255)',
-                    'data' => $data2,
                 ],
             ],
         ]);

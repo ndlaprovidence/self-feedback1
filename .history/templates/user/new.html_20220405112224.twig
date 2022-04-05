@@ -1,6 +1,6 @@
 {% extends 'base-form.html.twig' %}
 
-{% block title %}Edit User{% endblock %}
+{% block title %}New User{% endblock %}
 
 {% block stylesheets %}
    <link rel="stylesheet" href="../css/style.css">
@@ -9,10 +9,7 @@
 {% endblock %}
 
 {% block body %}
-        <h1>Edit User</h1>
-        {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+    <h1>Créer un utilisateur</h1>
 
-    <a href="{{ path('user_index') }}">retour à la liste</a>
-
-    {{ include('user/_delete_form.html.twig') }}
+    {{ include('user/_form.html.twig') }}
 {% endblock %}

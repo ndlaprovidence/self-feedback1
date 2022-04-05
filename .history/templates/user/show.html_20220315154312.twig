@@ -15,9 +15,9 @@
         <tbody>
             <tr class="table_title" id="table_title">
                 <th class="table_id">Id</th>
-                <th>Nom d'utilisateur</th>
-                <th>Rôles</th>
-                <th>Mot de passe</th>
+                <th>username</th>
+                <th>Roles</th>
+                <th>Password</th>
             </tr>
             <tr>
                 <th>{{ user.id }}</th>
@@ -30,7 +30,7 @@
 
     <a href="{{ path('user_index') }}" class="back_tolist">retour à la liste</a>
 
-    <a href="{{ path('user_edit', {'id': user.id}) }}" >editer</a>
+    <a href="{{ path('user_edit', {'id': user.id}) }}" >éditer</a>
 
     {{ include('user/_delete_form.html.twig') }}
 {% endblock %}
