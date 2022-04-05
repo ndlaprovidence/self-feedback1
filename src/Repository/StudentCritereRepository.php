@@ -22,8 +22,8 @@ class StudentCritereRepository extends ServiceEntityRepository
         parent::__construct($registry, StudentCritere::class);
     }
 
- /**
- *  @require  //TODO : REFAIRE CE REQUIRE
+/**
+ * @required
  */
  public function setCritereRep(CritereRepository $critereRepository)
     {
