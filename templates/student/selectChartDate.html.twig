@@ -1,0 +1,47 @@
+{% extends 'base-dashboard.html.twig' %}
+
+{% block title %}Student index{% endblock %}
+
+ {% block stylesheets %}
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+ {% endblock %}
+
+{% block body %}
+
+        <nav class="leftNav" id="myTopnav">
+            <div class="leftnav__date">
+                <a class="topnav__link" href="{{ path('export') }}" target="_blank">Rapports semaine courante <img src="../images/download.png" width="20px"></a>
+                <a class="topnav__link" target="_blanc" href="{{ "../documentation/documentation.html" }}">Documentation <img src="../images/question.png" width="20px"></a>
+                <a class="topnav__link" href="{{ path('student_chart_choice') }}">Paramètre Graphique <img src="../images/Param.png" width="20px"></a>
+                
+            </div>
+            <span class="leftnav__separateBar"></span>
+            <div class="leftnav__param">
+                <a class="topnav__link" href="{{ path('student_index') }}">| Rapports <img src="../images/report.png" width="20px"></a>
+                <a class="topnav__link" href="{{ path('classes_index') }}" >| Gestion des classes <img src="../images/classe.png" width="20px"></a>
+                <a class="topnav__link" href="{{ path('user_index') }}">| Gestion des utilisateurs <img src="../images/user.png" width="20px"></a>
+                <a class="topnav__link" href="{{ path('qrcode_generate') }}">| générer le QR-code <img src="../images/qrcode.png" width="20px"></a>
+            </div>
+        </nav>
+
+    <div class="bloc_dashboard">
+        <div class="btn_container">
+            <h1>FeedBack - Date Choice </h1>
+        </div>
+        <table class="table">
+            <thead>
+                {{ form(form) }}
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="bottom__param">
+       <a class="bottom__link" href="#"><img src="../images/report.png" width="30px"></a>
+       <a class="bottom__link" href="{{ path('classes_index') }}" ><img src="../images/classe.png" width="30px"></a>
+       <a class="bottom__link" href="{{ path('user_index') }}"><img src="../images/user.png" width="30px"></a>
+       <a class="bottom__link" href="{{ path('qrcode_generate') }}"><img src="../images/qrcode.png" width="30px"></a>
+    </div>
+{% endblock %}

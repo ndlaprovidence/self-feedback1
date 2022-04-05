@@ -32,29 +32,28 @@ class StudentRepository extends ServiceEntityRepository
         //dump($result);
         return $result;
     }
-    public function getDateRepas1(): ?array
+    public function getDateRepas1($madate): ?array
     {
         $conn = $this->getEntityManager()->getConnection();
-        $madate = new DateTime(date("Y-m-d"));
-        $sql = 'SELECT AVG(note_chaleur), AVG(note_gout), AVG(notequantite), AVG(noteacceuil), AVG(notediversite), AVG(notehygiene), note_date FROM student WHERE note_date = "'.$madate->format("Y-m-d").'";';
+        $sql = 'SELECT AVG(note_chaleur), AVG(note_gout), AVG(notequantite), AVG(noteacceuil), AVG(notediversite), AVG(notehygiene), note_date FROM student WHERE note_date = "'.$madate.'";';
         $query = $conn->executeQuery($sql);
         $result = $query->fetchAll();
         return $result;
     }
-    public function getDateRepas2(): ?array
+    public function getDateRepas2($madate2): ?array
     {
         $conn = $this->getEntityManager()->getConnection();
-        $madate = new DateTime(date("Y-m-d"));
+        $madate = new DateTime($madate2);
         $madate->sub(new DateInterval('P1D'));
         $sql = 'SELECT AVG(note_chaleur), AVG(note_gout), AVG(notequantite), AVG(noteacceuil), AVG(notediversite), AVG(notehygiene), note_date FROM student WHERE note_date = "'.$madate->format("Y-m-d").'";';
         $query = $conn->executeQuery($sql);
         $result = $query->fetchAll();
         return $result;
     }
-    public function getDateRepas3(): ?array
+    public function getDateRepas3($madate2): ?array
     {
         $conn = $this->getEntityManager()->getConnection();
-        $madate = new DateTime(date("Y-m-d"));
+        $madate = new DateTime($madate2);
         $madate->sub(new DateInterval('P2D'));
         //dump($madate3." ".$madate);
         $sql = 'SELECT AVG(note_chaleur), AVG(note_gout), AVG(notequantite), AVG(noteacceuil), AVG(notediversite), AVG(notehygiene), note_date FROM student WHERE note_date = "'.$madate->format("Y-m-d").'";';
@@ -63,10 +62,10 @@ class StudentRepository extends ServiceEntityRepository
         //dump($result);
         return $result;
     }
-    public function getDateRepas4(): ?array
+    public function getDateRepas4($madate2): ?array
     {
         $conn = $this->getEntityManager()->getConnection();
-        $madate = new DateTime(date("Y-m-d"));
+        $madate = new DateTime($madate2);
         $madate->sub(new DateInterval('P3D'));
         //dump($madate3." ".$madate);
         $sql = 'SELECT AVG(note_chaleur), AVG(note_gout), AVG(notequantite), AVG(noteacceuil), AVG(notediversite), AVG(notehygiene), note_date FROM student WHERE note_date = "'.$madate->format("Y-m-d").'";';
@@ -75,10 +74,10 @@ class StudentRepository extends ServiceEntityRepository
         //dump($result);
         return $result;
     }
-    public function getDateRepas5(): ?array
+    public function getDateRepas5($madate2): ?array
     {
         $conn = $this->getEntityManager()->getConnection();
-        $madate = new DateTime(date("Y-m-d"));
+        $madate = new DateTime($madate2);
         $madate->sub(new DateInterval('P4D'));
         //dump($madate3." ".$madate);
         $sql = 'SELECT AVG(note_chaleur), AVG(note_gout), AVG(notequantite), AVG(noteacceuil), AVG(notediversite), AVG(notehygiene), note_date FROM student WHERE note_date = "'.$madate->format("Y-m-d").'";';

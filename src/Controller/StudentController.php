@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use DateTime;
 use App\Entity\Student;
+use App\Entity\DateChart;
 use App\Form\StudentType;
 use App\Entity\ChartChoice;
 use App\Form\ChartChoiceType;
+use App\Form\DateChartType;
 use function PHPSTORM_META\type;
 use Doctrine\DBAL\Types\TextType;
 use Symfony\UX\Chartjs\Model\Chart;
@@ -39,6 +41,11 @@ class StudentController extends AbstractController
         if (!isset($typeChartChoice)) {
             $typeChartChoice = "bar";
         }
+        //$date = new DateTime(date("Y-m-d"));
+        $date = $request->get('date');
+        if (!isset($date)) {
+            $date = date("Y-m-d");
+        }
 
         $student = $studentRepository->findAll();
 
@@ -49,11 +56,11 @@ class StudentController extends AbstractController
         $data6 = [];
         $data7 = [];
         $data8 = [];
-        $datenoterepas1 = $studentRepository->getDateRepas1();
-        $datenoterepas2 = $studentRepository->getDateRepas2();
-        $datenoterepas3 = $studentRepository->getDateRepas3();
-        $datenoterepas4 = $studentRepository->getDateRepas4();
-        $datenoterepas5 = $studentRepository->getDateRepas5();
+        $datenoterepas1 = $studentRepository->getDateRepas1($date);
+        $datenoterepas2 = $studentRepository->getDateRepas2($date);
+        $datenoterepas3 = $studentRepository->getDateRepas3($date);
+        $datenoterepas4 = $studentRepository->getDateRepas4($date);
+        $datenoterepas5 = $studentRepository->getDateRepas5($date);
 
         if (isset($datenoterepas5[0]['note_date'])) {
             $labels[] = $datenoterepas5[0]['note_date'];
@@ -188,6 +195,28 @@ class StudentController extends AbstractController
             return $this->redirect("/student/?type=" . $chartChoice['type']);
         } else {
             return $this->render('student/selectChartType.html.twig', [
+                'form' => $form->createView(),
+            ]);
+        }
+    }
+
+       /**
+     * @Route("/date_chart", name="student_date_chart", methods={"GET","POST"})
+     */
+    function dateChart(Request $request): Response
+    {
+        $dateChoice = new DateChart();
+
+        $form = $this->createForm(DateChartType::class, $dateChoice);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            //date_chart[date][month]
+            $date = $_POST["date_chart"]["date"]["year"]."-".$_POST["date_chart"]["date"]["month"]."-".$_POST["date_chart"]["date"]["day"];
+            return $this->redirect("/student/?date=" . $date);
+        } else {
+            return $this->render('student/selectChartDate.html.twig', [
                 'form' => $form->createView(),
             ]);
         }
