@@ -26,6 +26,7 @@ class StudentCritere
      * @ORM\ManyToOne(targetEntity=Student::class)
      * @ORM\JoinColumn(nullable=false)
      */
+
     private $idStudent;
 
     /**
