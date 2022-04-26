@@ -2,12 +2,12 @@
 
 namespace App\Repository;
 
-use DateTime;
-use DateInterval;
 use App\Entity\StudentCritere;
 use App\Repository\CritereRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use DateInterval;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method StudentCritere|null find($id, $lockMode = null, $lockVersion = null)
@@ -25,16 +25,17 @@ class StudentCritereRepository extends ServiceEntityRepository
 /**
  * @required
  */
- public function setCritereRep(CritereRepository $critereRepository)
+    public function setCritereRep(CritereRepository $critereRepository)
     {
-        $this->critereRepository=$critereRepository;
+        dump("setCritereRep");
+        $this->critereRepository = $critereRepository;
     }
- 
+
     public function getLesCriteresSQL()
     {
         $conn = $this->getEntityManager()->getConnection();
         $madate = new DateTime(date("Y-m-d"));
-        $strSQL = "" ;
+        $strSQL = "";
         $this->critereRepository->findAll();
         dump($this->critereRepository->findAll());
         //'SELECT AVG(note_repas), AVG(note_valeur_environnement), AVG(note_chaleur), AVG(note_gout), AVG(notequantite), AVG(noteacceuil), AVG(notediversite), AVG(notehygiene), note_date FROM student WHERE note_date = "'.$madate->format("Y-m-d").'";'
@@ -42,8 +43,10 @@ class StudentCritereRepository extends ServiceEntityRepository
 
     public function getDateRepas1(): ?array
     {
-        
-        $sql = $this->getLesCriteresSQL();
+        $conn = $this->getEntityManager()->getConnection();
+        $madate = new DateTime(date("Y-m-d"));
+        $madate->sub(new DateInterval('P1D'));
+        $sql = 'SELECT AVG(note_repas), AVG(note_valeur_environnement), AVG(note_chaleur), AVG(note_gout), AVG(notequantite), AVG(noteacceuil), AVG(notediversite), AVG(notehygiene), note_date FROM student WHERE note_date = "' . $madate->format("Y-m-d") . '";';
         $query = $conn->executeQuery($sql);
         $result = $query->fetchAll();
         return $result;
@@ -53,7 +56,7 @@ class StudentCritereRepository extends ServiceEntityRepository
         $conn = $this->getEntityManager()->getConnection();
         $madate = new DateTime(date("Y-m-d"));
         $madate->sub(new DateInterval('P1D'));
-        $sql = 'SELECT AVG(note_repas), AVG(note_valeur_environnement), AVG(note_chaleur), AVG(note_gout), AVG(notequantite), AVG(noteacceuil), AVG(notediversite), AVG(notehygiene), note_date FROM student WHERE note_date = "'.$madate->format("Y-m-d").'";';
+        $sql = 'SELECT AVG(note_repas), AVG(note_valeur_environnement), AVG(note_chaleur), AVG(note_gout), AVG(notequantite), AVG(noteacceuil), AVG(notediversite), AVG(notehygiene), note_date FROM student WHERE note_date = "' . $madate->format("Y-m-d") . '";';
         $query = $conn->executeQuery($sql);
         $result = $query->fetchAll();
         return $result;
@@ -64,7 +67,7 @@ class StudentCritereRepository extends ServiceEntityRepository
         $madate = new DateTime(date("Y-m-d"));
         $madate->sub(new DateInterval('P2D'));
         //dump($madate3." ".$madate);
-        $sql = 'SELECT AVG(note_repas), AVG(note_valeur_environnement), AVG(note_chaleur), AVG(note_gout), AVG(notequantite), AVG(noteacceuil), AVG(notediversite), AVG(notehygiene), note_date FROM student WHERE note_date = "'.$madate->format("Y-m-d").'";';
+        $sql = 'SELECT AVG(note_repas), AVG(note_valeur_environnement), AVG(note_chaleur), AVG(note_gout), AVG(notequantite), AVG(noteacceuil), AVG(notediversite), AVG(notehygiene), note_date FROM student WHERE note_date = "' . $madate->format("Y-m-d") . '";';
         $query = $conn->executeQuery($sql);
         $result = $query->fetchAll();
         //dump($result);
@@ -76,7 +79,7 @@ class StudentCritereRepository extends ServiceEntityRepository
         $madate = new DateTime(date("Y-m-d"));
         $madate->sub(new DateInterval('P3D'));
         //dump($madate3." ".$madate);
-        $sql = 'SELECT AVG(note_repas), AVG(note_valeur_environnement), AVG(note_chaleur), AVG(note_gout), AVG(notequantite), AVG(noteacceuil), AVG(notediversite), AVG(notehygiene), note_date FROM student WHERE note_date = "'.$madate->format("Y-m-d").'";';
+        $sql = 'SELECT AVG(note_repas), AVG(note_valeur_environnement), AVG(note_chaleur), AVG(note_gout), AVG(notequantite), AVG(noteacceuil), AVG(notediversite), AVG(notehygiene), note_date FROM student WHERE note_date = "' . $madate->format("Y-m-d") . '";';
         $query = $conn->executeQuery($sql);
         $result = $query->fetchAll();
         //dump($result);
@@ -88,18 +91,17 @@ class StudentCritereRepository extends ServiceEntityRepository
         $madate = new DateTime(date("Y-m-d"));
         $madate->sub(new DateInterval('P4D'));
         //dump($madate3." ".$madate);
-        $sql = 'SELECT AVG(note_repas), AVG(note_valeur_environnement), AVG(note_chaleur), AVG(note_gout), AVG(notequantite), AVG(noteacceuil), AVG(notediversite), AVG(notehygiene), note_date FROM student WHERE note_date = "'.$madate->format("Y-m-d").'";';
+        $sql = 'SELECT AVG(note_repas), AVG(note_valeur_environnement), AVG(note_chaleur), AVG(note_gout), AVG(notequantite), AVG(noteacceuil), AVG(notediversite), AVG(notehygiene), note_date FROM student WHERE note_date = "' . $madate->format("Y-m-d") . '";';
         $query = $conn->executeQuery($sql);
         $result = $query->fetchAll();
         //dump($result);
         return $result;
     }
-  
 
-        // /**
+    // /**
     //  * @return NoteWeek[] Returns an array of Student objects
     //  */
-    
+
     public function findWeek($startdate): ?array
     {
         $conn = $this->getEntityManager()->getConnection();
@@ -108,7 +110,6 @@ class StudentCritereRepository extends ServiceEntityRepository
         $result = $query->fetchAll();
         return $result;
     }
-    
 
     public function findNotesFromWeek(): ?array
     {
@@ -116,7 +117,7 @@ class StudentCritereRepository extends ServiceEntityRepository
         $madate3 = new DateTime(date("Y-m-d"));
         $madate3->sub(new DateInterval('P4D'));
         $madate = new DateTime(date("Y-m-d"));
-        $sql = 'SELECT note_repas as "Repas",note_chaleur as "Chaleur", note_gout as "Gout", note_valeur_environnement as "Environnement", note_date as "Date", note_Commentaire as "Commentaire", id FROM student WHERE note_date <= "'.$madate->format('Y-m-d').'" AND note_date >= "'.$madate3->format("Y-m-d").'";';
+        $sql = 'SELECT note_repas as "Repas",note_chaleur as "Chaleur", note_gout as "Gout", note_valeur_environnement as "Environnement", note_date as "Date", note_Commentaire as "Commentaire", id FROM student WHERE note_date <= "' . $madate->format('Y-m-d') . '" AND note_date >= "' . $madate3->format("Y-m-d") . '";';
         $query = $conn->executeQuery($sql);
         $result = $query->fetchAll();
         return $result;
