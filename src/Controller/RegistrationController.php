@@ -15,6 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use SymfonyCasts\Bundle\Verifyusername\Exception\VerifyusernameExceptionInterface;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class RegistrationController extends AbstractController
 {
@@ -22,6 +24,14 @@ class RegistrationController extends AbstractController
 
     public function __construct(EmailVerifier $emailVerifier)
     {
+        // create a log channel
+        $log = new Logger('name');
+        $log->pushHandler(new StreamHandler('path/to/your.log', Logger::WARNING));
+
+        // add records to the log
+        $log->warning('Foo');
+        $log->error('Bar');
+
         $this->EmailVerifier = $emailVerifier;
     }
 
@@ -37,7 +47,7 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
-            $userPasswordEncoder->encodePassword(
+                $userPasswordEncoder->encodePassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
@@ -48,7 +58,9 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // generate a signed url and username it to the user
-            $this->EmailVerifier->sendusernameConfirmation('app_verify_username', $user,
+            $this->EmailVerifier->sendusernameConfirmation(
+                'app_verify_username',
+                $user,
                 (new Templatedusername())
                     ->from(new Address('feedbacktest@yopmail.com', 'Feedback Self Test'))
                     ->to($user->getusername())

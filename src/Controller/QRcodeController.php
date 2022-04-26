@@ -14,6 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
 use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 /**
  * @Route("/qrcode")
@@ -25,20 +27,27 @@ class QRcodeController extends AbstractController
      */
     public function index(QrcodeRepository $qrcodeRepository): Response
     {
+        // create a log channel
+        $log = new Logger('name');
+        $log->pushHandler(new StreamHandler('path/to/your.log', Logger::WARNING));
+
+        // add records to the log
+        $log->warning('Foo');
+        $log->error('Bar');
+
         $this->denyAccessUnlessGranted('ROLE_USER');
         $qrcodeRepository->verifyToken();
-        $logoPath = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'ndlp.png';
+        $logoPath = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'ndlp.png';
         $token = $qrcodeRepository->getTokenToday();
-        if ($token == "")
-        {
+        if ($token == "") {
             $token = $qrcodeRepository->createToken();
-            $logoPath = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'ndlp.png';
+            $logoPath = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'ndlp.png';
 
             $writer = new PngWriter();
-            
+
             // Create QR code
-           include('../adresse.php');
-            $qrCode = QrCode::create(ADRESSE.'student/new?token='.$token)
+            include('../adresse.php');
+            $qrCode = QrCode::create(ADRESSE . 'student/new?token=' . $token)
                 ->setEncoding(new Encoding('UTF-8'))
                 ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
                 ->setSize(500)
@@ -46,32 +55,30 @@ class QRcodeController extends AbstractController
                 ->setRoundBlockSizeMode(new RoundBlockSizeModeMargin())
                 ->setForegroundColor(new Color(0, 0, 0))
                 ->setBackgroundColor(new Color(255, 255, 255));
-                    
+
             // Create generic logo
             $logo = Logo::create($logoPath)
                 ->setResizeToWidth(50);
-            
+
             // Create generic label
             $label = Label::create('Scannez pour accéder au questionnaire !')
                 ->setTextColor(new Color(92, 119, 209));
-            
-            $result = $writer->write($qrCode, $logo, $label);     
-    
+
+            $result = $writer->write($qrCode, $logo, $label);
+
             $dataUri = $result->getDataUri();
-    
+
             return $this->render('qrcode/index.html.twig', [
                 'data_url' => $dataUri,
                 'title' => "QR code",
-            ]); 
-        }
-        else 
-        {
-            $logoPath = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'ndlp.png';
+            ]);
+        } else {
+            $logoPath = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'ndlp.png';
 
             $writer = new PngWriter();
-    
+
             // Create QR code
-            $qrCode = QrCode::create(ADRESSE.'student/new?token='.$token)
+            $qrCode = QrCode::create(ADRESSE . 'student/new?token=' . $token)
                 ->setEncoding(new Encoding('UTF-8'))
                 ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
                 ->setSize(500)
@@ -79,28 +86,24 @@ class QRcodeController extends AbstractController
                 ->setRoundBlockSizeMode(new RoundBlockSizeModeMargin())
                 ->setForegroundColor(new Color(0, 0, 0))
                 ->setBackgroundColor(new Color(255, 255, 255));
-                    
+
             // Create generic logo
             $logo = Logo::create($logoPath)
                 ->setResizeToWidth(50);
-            
+
             // Create generic label
             $label = Label::create('Scannez pour accéder au questionnaire !')
                 ->setTextColor(new Color(92, 119, 209));
-            
-            $result = $writer->write($qrCode, $logo, $label);     
-    
+
+            $result = $writer->write($qrCode, $logo, $label);
+
             $dataUri = $result->getDataUri();
-    
+
             return $this->render('qrcode/index.html.twig', [
                 'data_url' => $dataUri,
                 'title' => "QR code",
-            ]); 
+            ]);
         }
-
-
-
-
     }
     // public function scanToken(tokenRepository $userRepository): Response
     // {

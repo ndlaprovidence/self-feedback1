@@ -1,0 +1,8 @@
+[2022-04-26 10:30:03] name.WARNING: Foo [] []
+[2022-04-26 10:30:03] name.ERROR: Bar [] []
+[2022-04-26 10:30:06] name.WARNING: Foo [] []
+[2022-04-26 10:30:06] name.ERROR: Bar [] []
+[2022-04-26 12:12:15] name.WARNING: Foo [] []
+[2022-04-26 12:12:15] name.ERROR: Bar [] []
+[2022-04-26 12:12:18] name.WARNING: Foo [] []
+[2022-04-26 12:12:18] name.ERROR: Bar [] []

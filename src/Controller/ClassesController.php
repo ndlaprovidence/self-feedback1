@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 /**
  * @Route("/classes")
@@ -20,6 +22,14 @@ class ClassesController extends AbstractController
      */
     public function index(ClassesRepository $classesRepository): Response
     {
+        // create a log channel
+        $log = new Logger('name');
+        $log->pushHandler(new StreamHandler('path/to/your.log', Logger::WARNING));
+
+        // add records to the log
+        $log->warning('Foo');
+        $log->error('Bar');
+
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         return $this->render('classes/index.html.twig', [
@@ -33,7 +43,7 @@ class ClassesController extends AbstractController
     public function new(Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
-        
+
         $class = new Classes();
         $form = $this->createForm(ClassesType::class, $class);
         $form->handleRequest($request);
@@ -57,7 +67,7 @@ class ClassesController extends AbstractController
      */
     function valid(): Response
     {
-        
+
         return $this->render('classes/valid.html.twig', [
             'titre' => 'La classe a étais enregisté !',
         ]);
@@ -100,8 +110,8 @@ class ClassesController extends AbstractController
     public function delete(Request $request, Classes $class): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
-        
-        if ($this->isCsrfTokenValid('delete'.$class->getId(), $request->request->get('_token'))) {
+
+        if ($this->isCsrfTokenValid('delete' . $class->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($class);
             $entityManager->flush();

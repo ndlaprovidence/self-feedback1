@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class ChartjsController extends AbstractController
 {
@@ -16,9 +18,15 @@ class ChartjsController extends AbstractController
      */
     public function index(StudentRepository $StudentRepository, ChartBuilderInterface $chartBuilder): Response
     {
- 
+        $log = new Logger('name');
+        $log->pushHandler(new StreamHandler('path/to/your.log', Logger::WARNING));
+
+        // add records to the log
+        $log->warning('Foo');
+        $log->error('Bar');
+
         $student = $StudentRepository->findAll();
- 
+
         $labels = [];
         $data = [];
         $data2 = [];
@@ -30,33 +38,33 @@ class ChartjsController extends AbstractController
         dump($datenoterepas1);
         dump($datenoterepas2);
 
-        if (isset($datenoterepas1[0]['note_date'])){
-         $labels[] = $datenoterepas1[0]['note_date'];
-        $data[] = $datenoterepas1[0]['AVG(note_repas)'];
-        $data2[] = $datenoterepas1[0]['AVG(note_valeur_environnement)'];
-    }
-        if (isset($datenoterepas2[0]['note_date'])){
-        $labels[] = $datenoterepas2[0]['note_date'];
-        $data[] = $datenoterepas2[0]['AVG(note_repas)'];
-        $data2[] = $datenoterepas2[0]['AVG(note_valeur_environnement)'];
-    }
-        if(isset($datenoterepas3[0]['note_date'])){
-        $labels[] = $datenoterepas3[0]['note_date'];
-        $data[] = $datenoterepas3[0]['AVG(note_repas)'];
-        $data2[] = $datenoterepas3[0]['AVG(note_valeur_environnement)'];
-    }
-        if(isset($datenoterepas4[0]['note_date'])){
-        $labels[] = $datenoterepas4[0]['note_date'];
-        $data[] = $datenoterepas4[0]['AVG(note_repas)'];
-        $data2[] = $datenoterepas4[0]['AVG(note_valeur_environnement)'];
-    }
-        if(isset($datenoterepas5[0]['note_date'])){
-        $labels[] = $datenoterepas5[0]['note_date'];
-        $data[] = $datenoterepas5[0]['AVG(note_repas)'];
-        $data2[] = $datenoterepas5[0]['AVG(note_valeur_environnement)'];
-    }
+        if (isset($datenoterepas1[0]['note_date'])) {
+            $labels[] = $datenoterepas1[0]['note_date'];
+            $data[] = $datenoterepas1[0]['AVG(note_repas)'];
+            $data2[] = $datenoterepas1[0]['AVG(note_valeur_environnement)'];
+        }
+        if (isset($datenoterepas2[0]['note_date'])) {
+            $labels[] = $datenoterepas2[0]['note_date'];
+            $data[] = $datenoterepas2[0]['AVG(note_repas)'];
+            $data2[] = $datenoterepas2[0]['AVG(note_valeur_environnement)'];
+        }
+        if (isset($datenoterepas3[0]['note_date'])) {
+            $labels[] = $datenoterepas3[0]['note_date'];
+            $data[] = $datenoterepas3[0]['AVG(note_repas)'];
+            $data2[] = $datenoterepas3[0]['AVG(note_valeur_environnement)'];
+        }
+        if (isset($datenoterepas4[0]['note_date'])) {
+            $labels[] = $datenoterepas4[0]['note_date'];
+            $data[] = $datenoterepas4[0]['AVG(note_repas)'];
+            $data2[] = $datenoterepas4[0]['AVG(note_valeur_environnement)'];
+        }
+        if (isset($datenoterepas5[0]['note_date'])) {
+            $labels[] = $datenoterepas5[0]['note_date'];
+            $data[] = $datenoterepas5[0]['AVG(note_repas)'];
+            $data2[] = $datenoterepas5[0]['AVG(note_valeur_environnement)'];
+        }
         //dump($datenoteenvironnement);
-       /* foreach ($student as $Students) {
+        /* foreach ($student as $Students) {
 
             $labels[] = $Students->getNoteDate()->format('d/m/Y');
             $data[] = $Students->getNoteRepas();
@@ -85,10 +93,10 @@ class ChartjsController extends AbstractController
                 ],
             ],
         ]);
-         
+
         $chart->setOptions([]);
- 
- 
+
+
         return $this->render('chartjs/index.html.twig', [
             'controller_name' => 'Graphique note',
             'chart' => $chart,
