@@ -4,12 +4,12 @@ namespace App\Controller;
 
 use App\Entity\StudentCritere;
 use App\Form\StudentCritereType;
-use App\Repository\StudentCritereRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\StudentCritereRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/student/critere")
@@ -41,10 +41,14 @@ class StudentCritereController extends AbstractController
 
             return $this->redirectToRoute('student_critere_index', [], Response::HTTP_SEE_OTHER);
         }
+        
+        $criteres = $StudentCritereRepository->findAll();  // Affiche tous les critères
 
         return $this->render('student_critere/new.html.twig', [
             'student_critere' => $studentCritere,
-            'form' => $form->createView(),
+            'form' => $form->createView(), // Affiche le formulaire
+            'criteres' => $criteres,
+
         ]);
     }
 
